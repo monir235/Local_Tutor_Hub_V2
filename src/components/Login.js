@@ -15,7 +15,7 @@ const Login = ({ onPageChange }) => {
     }
 
     // Make a POST request to your backend
-    const response = await fetch('http://localhost/loga.php', {
+    const response = await fetch('https://paloma-nonmicroscopic-marleigh.ngrok-free.app/loga.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
