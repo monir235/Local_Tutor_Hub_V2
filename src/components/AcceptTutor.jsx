@@ -25,6 +25,7 @@ const AcceptTutor = () => {
     <div className="container">
       <h1>Accepted Tutors</h1>
       <div className="cardContainer">
+        {acceptedTutors.length === 0 && <p style={{color: '#fff'}}>No tutors available</p>}
         {acceptedTutors.map((tutor, index) => (
           <div key={index} className="card accepted">
             <h3>{tutor.name}</h3>
@@ -34,8 +35,6 @@ const AcceptTutor = () => {
             <p><strong>Location:</strong> {tutor.location}</p>
             <p><strong>Institution:</strong> {tutor.institution}</p>
             <p><strong>Subject:</strong> {tutor.currentSubject}</p>
-            <p><strong>Experience:</strong> {tutor.teachingExperience} years</p>
-            {tutor.additionalInfo && <p>{tutor.additionalInfo}</p>}
           </div>
         ))}
       </div>

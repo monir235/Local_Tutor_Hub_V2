@@ -1,43 +1,44 @@
 import React, { useState, useEffect } from 'react';
 
 const AcceptStu = () => {
-  const [acceptedTutors, setAcceptedTutors] = useState([]);
+  const [acceptedStudents, setAcceptedStudents] = useState([]);
 
   useEffect(() => {
-    const fetchAcceptedTutors = async () => {
+    const fetchAcceptedStudents = async () => {
       try {
         const response = await fetch('https://paloma-nonmicroscopic-marleigh.ngrok-free.app/redol.php');
         if (response.ok) {
           const data = await response.json();
-          setAcceptedTutors(data);
+          setAcceptedStudents(data);
         } else {
-          console.error('Failed to fetch accepted tutor information:', response.statusText);
+          console.error('Failed to fetch accepted student information:', response.statusText);
         }
       } catch (error) {
-        console.error('Error fetching accepted tutor information:', error.message);
+        console.error('Error fetching accepted student information:', error.message);
       }
     };
 
-    fetchAcceptedTutors();
+    fetchAcceptedStudents();
   }, []);
 
   return (
     <div className="container">
-      <h1>Accepted Student</h1>
+      <h1>Accepted Students</h1>
       <div className="cardContainer">
-        {acceptedTutors.map((tutor) => (
-          <div key={tutor.id} className="card">
-            <p>Name: {tutor.name}</p>
-            <p>Mobile Number: {tutor.mobileNumber}</p>
-            <p>Email: {tutor.email}</p>
-            <p> Salary offer:{tutor.salaryOffer}</p>
-            <p>Day per Week:{tutor.dayPerWeek}</p>
-            <p>Location: {tutor.location}</p>
-            
+        {acceptedStudents.length === 0 && <p style={{ color: '#fff' }}>No students available</p>}
+        {acceptedStudents.map((student, index) => (
+          <div key={index} className="card">
+            <h3>{student.name}</h3>
+            <p><strong>Mobile Number:</strong> {student.mobileNumber}</p>
+            <p><strong>Email:</strong> {student.email}</p>
+            <p><strong>Salary Offer:</strong> {student.salaryOffer}</p>
+            <p><strong>Days per Week:</strong> {student.dayPerWeek}</p>
+            <p><strong>Location:</strong> {student.location}</p>
           </div>
         ))}
       </div>
-     <style jsx>{`
+
+      <style jsx>{`
         .container {
           display: flex;
           flex-direction: column;
@@ -65,10 +66,11 @@ const AcceptStu = () => {
           background: #ffffff;
           box-shadow: 0 8px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.07);
           font-weight: 500;
+          transition: transform 0.3s, box-shadow 0.3s;
         }
-        .card.accepted {
-          background: #d4edda;
-          border: 1px solid #28a745;
+        .card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 12px 25px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.1);
         }
         .card h3 {
           margin-bottom: 12px;
