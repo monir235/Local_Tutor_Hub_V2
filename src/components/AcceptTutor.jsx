@@ -2,19 +2,23 @@ import React, { useState, useEffect } from 'react';
 
 const AcceptTutor = () => {
   const [acceptedTutors, setAcceptedTutors] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchAcceptedTutors = async () => {
       try {
         const response = await fetch('https://paloma-nonmicroscopic-marleigh.ngrok-free.app/redox.php');
-        if (response.ok) {
-          const data = await response.json();
-          setAcceptedTutors(data);
-        } else {
-          console.error('Failed to fetch accepted tutor information:', response.statusText);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      } catch (error) {
-        console.error('Error fetching accepted tutor information:', error.message);
+        const data = await response.json();
+        setAcceptedTutors(data);
+      } catch (err) {
+        console.error('Error fetching accepted tutor information:', err.message);
+        setError('Failed to fetch tutor information');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -24,8 +28,13 @@ const AcceptTutor = () => {
   return (
     <div className="container">
       <h1>Accepted Tutors</h1>
+
+      {loading && <p style={{ color: '#fff' }}>Loading tutors...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
       <div className="cardContainer">
-        {acceptedTutors.length === 0 && <p style={{color: '#fff'}}>No tutors available</p>}
+        {!loading && acceptedTutors.length === 0 && <p style={{ color: '#fff' }}>No tutors available</p>}
+
         {acceptedTutors.map((tutor, index) => (
           <div key={index} className="card accepted">
             <h3>{tutor.name}</h3>
