@@ -127,6 +127,55 @@ const MoneyCard = () => {
           }
         }
       `}</style>
+
+
+
+
+
+      {/* Footer */}
+      <div
+        style={{
+          background: 'rgba(30, 58, 138, 0.95)',
+          color: '#ffffff',
+          textAlign: 'center',
+          padding: '20px',
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          boxShadow: '0 -6px 15px rgba(0,0,0,0.25)',
+        }}
+      >
+        <div>
+          {[
+            { href: "https://www.facebook.com/sirajummonir.monir.5", src: "/fb1.png", alt: "Facebook" },
+            { href: "https://twitter.com/ayon_chayo33456", src: "/twitter.jpeg", alt: "Twitter" },
+            { href: "https://www.instagram.com/monir_chayon/", src: "/insta.jpeg", alt: "Instagram" },
+            { href: "https://github.com/monir235", src: "/git.png", alt: "GitHub" },
+            { href: "https://web.cu.ac.bd/v2/", src: "/Culogo.jpeg", alt: "CU" },
+          ].map((icon, index) => (
+            <a key={index} href={icon.href} target="_blank" rel="noopener noreferrer">
+              <img
+                src={icon.src}
+                alt={icon.alt}
+                style={{
+                  width: '35px',
+                  height: '35px',
+                  margin: '0 10px',
+                  borderRadius: '50%',
+                  boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+                  transition: 'transform 0.3s',
+                }}
+                onMouseEnter={(e) => (e.target.style.transform = 'scale(1.2)')}
+                onMouseLeave={(e) => (e.target.style.transform = 'scale(1)')}
+              />
+            </a>
+          ))}
+        </div>
+        <div style={{ marginTop: '12px', fontWeight: '600', fontSize: '0.9em' }}>
+          © 2024 Sirajum Monir | University of Chittagong
+        </div>
+      </div>
     </div>
   );
 };
