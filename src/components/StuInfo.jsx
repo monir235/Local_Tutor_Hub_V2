@@ -20,7 +20,7 @@ const StudentForm = ({ onPageChange }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://paloma-nonmicroscopic-marleigh.ngrok-free.app/student.php', {
+      const response = await fetch('https://paloma-nonmicroscopic-marleigh.ngrok-free.app/students.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
