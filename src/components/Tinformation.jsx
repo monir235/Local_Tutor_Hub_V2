@@ -62,7 +62,7 @@ const Tinformation = () => {
             <p><strong>Institution:</strong> {tutor.institution}</p>
             <p><strong>Subject:</strong> {tutor.currentSubject}</p>
             <p><strong>Experience:</strong> {tutor.teachingExperience} years</p>
-            {tutor.additionalInfo && <p>{tutor.additionalInfo}</p>}
+            
             <button onClick={() => handleAccept(tutor.id)}>
               {tutor.accepted ? 'Applied' : 'Apply'}
             </button>
