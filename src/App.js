@@ -25,6 +25,7 @@ import MoneyCard from './components/MoneyCard';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('Login'); // Default to Login page
+  const [hoveredNav, setHoveredNav] = useState(null);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -81,8 +82,8 @@ function App() {
     }
   };
 
-  // Button style for modern UI
-  const navButtonStyle = {
+  // base button style
+  const navButtonBase = {
     padding: '12px 18px',
     fontSize: '14px',
     background: 'linear-gradient(135deg, #4f46e5, #3b82f6)',
@@ -92,14 +93,29 @@ function App() {
     cursor: 'pointer',
     margin: '8px',
     fontWeight: '500',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.18)',
+    transition: 'all 0.18s ease',
   };
 
-  const navButtonHover = {
-    transform: 'translateY(-2px)',
-    boxShadow: '0 6px 16px rgba(0,0,0,0.3)',
+  const navButtonHoverStyle = {
+    transform: 'translateY(-3px)',
+    boxShadow: '0 10px 30px rgba(0,0,0,0.25)',
   };
+
+  const navItems = [
+    ['Admin', 'Home'],
+    ['SignIno', 'Register'],
+    ['tutorlogin', 'Tutor Login'],
+    ['stulogin', 'Student Login'],
+    ['Profile', 'Profile'],
+    ['Tinfo', 'Available Tutor'],
+    ['Stubd', 'Available Student'],
+    ['searchtutor', 'Search Tutor'],
+    ['searchstu', 'Search Student'],
+    ['redox', 'Accept Tutor'],
+    ['redol', 'Accept Student'],
+    ['crut', 'Collection'],
+  ];
 
   return (
     <div
@@ -109,6 +125,7 @@ function App() {
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
+        paddingBottom: '140px' // reserve space for fixed footer
       }}
     >
       {currentPage !== 'Login' && (
@@ -119,45 +136,78 @@ function App() {
             justifyContent: 'center',
             padding: '15px',
             margin: '20px auto',
-            background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(12px)',
-            borderRadius: '20px',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)',
-            width: '90%',
-            maxWidth: '1000px',
+            background: 'rgba(255, 255, 255, 0.12)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '16px',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.18)',
+            width: '92%',
+            maxWidth: '1100px',
           }}
         >
-          {[
-            ['Admin', 'Home'],
-            ['SignIno', 'Register'],
-            ['tutorlogin', 'Tutor Login'],
-            ['stulogin', 'Student Login'],
-            ['Profile', 'Profile'],
-            ['Tinfo', 'Available Tutor'],
-            ['Stubd', 'Available Student'],
-            ['searchtutor', 'Search Tutor'],
-            ['searchstu', 'Search Student'],
-            ['redox', 'Accept Tutor'],
-            ['redol', 'Accept Student'],
-            ['crut', 'Collection'],
-          ].map(([page, label]) => (
+          {navItems.map(([page, label]) => (
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
-              style={navButtonStyle}
-              onMouseEnter={(e) =>
-                Object.assign(e.target.style, navButtonHover)
-              }
-              onMouseLeave={(e) =>
-                Object.assign(e.target.style, navButtonStyle)
-              }
+              onMouseEnter={() => setHoveredNav(page)}
+              onMouseLeave={() => setHoveredNav(null)}
+              style={{
+                ...navButtonBase,
+                ...(hoveredNav === page ? navButtonHoverStyle : {}),
+              }}
             >
               {label}
             </button>
           ))}
         </div>
       )}
+
       <div style={{ flex: 1 }}>{renderPage()}</div>
+
+      {/* Footer */}
+      <div
+        style={{
+          background: 'rgba(30, 58, 138, 0.95)',
+          color: '#ffffff',
+          textAlign: 'center',
+          padding: '20px',
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          boxShadow: '0 -6px 15px rgba(0,0,0,0.25)',
+          zIndex: 999,
+        }}
+      >
+        <div>
+          {[
+            { href: "https://www.facebook.com/sirajummonir.monir.5", src: "/fb1.png", alt: "Facebook" },
+            { href: "https://twitter.com/ayon_chayo33456", src: "/twitter.jpeg", alt: "Twitter" },
+            { href: "https://www.instagram.com/monir_chayon/", src: "/insta.jpeg", alt: "Instagram" },
+            { href: "https://github.com/monir235", src: "/git.png", alt: "GitHub" },
+            { href: "https://web.cu.ac.bd/v2/", src: "/Culogo.jpeg", alt: "CU" },
+          ].map((icon, index) => (
+            <a key={index} href={icon.href} target="_blank" rel="noopener noreferrer">
+              <img
+                src={icon.src}
+                alt={icon.alt}
+                style={{
+                  width: '35px',
+                  height: '35px',
+                  margin: '0 10px',
+                  borderRadius: '50%',
+                  boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+                  transition: 'transform 0.18s ease',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.18)')}
+                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+              />
+            </a>
+          ))}
+        </div>
+        <div style={{ marginTop: '12px', fontWeight: '600', fontSize: '0.95em' }}>
+          © {new Date().getFullYear()} Sirajum Monir | University of Chittagong
+        </div>
+      </div>
     </div>
   );
 }
