@@ -156,7 +156,7 @@ const TutorForm = ({ onPageChange }) => {
               <option value="100">100</option>
               <option value="200">200</option>
               <option value="400">400</option>
-              <option value="500">500</option>
+              <option value="500">1000</option>
             </select>
           </div>
 
