@@ -11,10 +11,17 @@ const AcceptTutor = () => {
         const response = await fetch(
           "https://paloma-nonmicroscopic-marleigh.ngrok-free.app/redox.php"
         );
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data = await response.json();
+
+        // Get raw text to debug what comes back
+        const text = await response.text();
+        console.log("Raw response from PHP:", text);
+
+        // Try parsing JSON
+        const data = JSON.parse(text);
         setAcceptedTutors(data);
       } catch (err) {
         console.error("Error fetching accepted tutor information:", err);
@@ -39,20 +46,35 @@ const AcceptTutor = () => {
     <div className="container">
       <h1>Accepted Tutors</h1>
       <div className="cardContainer">
-        {acceptedTutors.length === 0 && <p style={{ color: "#fff" }}>No tutors available</p>}
+        {acceptedTutors.length === 0 && (
+          <p style={{ color: "#fff" }}>No tutors available</p>
+        )}
         {acceptedTutors.map((tutor, index) => (
           <div key={index} className="card accepted">
             <h3>{tutor.name}</h3>
-            <p><strong>Availability:</strong> {tutor.availability}</p>
-            <p><strong>Mobile:</strong> {tutor.mobileNumber}</p>
-            <p><strong>Email:</strong> {tutor.email}</p>
-            <p><strong>Location:</strong> {tutor.location}</p>
-            <p><strong>Institution:</strong> {tutor.institution}</p>
-            <p><strong>Subject:</strong> {tutor.currentSubject}</p>
+            <p>
+              <strong>Availability:</strong> {tutor.availability}
+            </p>
+            <p>
+              <strong>Mobile:</strong> {tutor.mobileNumber}
+            </p>
+            <p>
+              <strong>Email:</strong> {tutor.email}
+            </p>
+            <p>
+              <strong>Location:</strong> {tutor.location}
+            </p>
+            <p>
+              <strong>Institution:</strong> {tutor.institution}
+            </p>
+            <p>
+              <strong>Subject:</strong> {tutor.currentSubject}
+            </p>
           </div>
         ))}
       </div>
 
+      {/* Inline CSS for plain React */}
       <style>{`
         .container {
           display: flex;
@@ -93,7 +115,7 @@ const AcceptTutor = () => {
         }
         .card p {
           margin: 6px 0;
-          color: #555;
+          color: #333;
         }
         @media (max-width: 700px) {
           .card {
