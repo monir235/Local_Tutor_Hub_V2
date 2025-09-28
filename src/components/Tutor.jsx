@@ -26,15 +26,30 @@ const TutorForm = ({ onPageChange }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Only send the fields that exist in the database
+    const backendData = {
+      name: formData.name,
+      availability: formData.availability,
+      mobileNumber: formData.mobileNumber,
+      email: formData.email,
+      location: formData.location,
+      institution: formData.institution,
+      currentSubject: formData.currentSubject,
+      teachingExperience: formData.teachingExperience
+    };
+
     try {
       const response = await fetch('http://localhost/tutor.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(backendData),
       });
 
-      if (response.ok) {
-        console.log('Form data submitted successfully');
+      const result = await response.json();
+      console.log(result);
+
+      if (response.ok && result.status === "success") {
         setFormData({
           name: '',
           availability: '',
@@ -49,7 +64,7 @@ const TutorForm = ({ onPageChange }) => {
         });
         onPageChange('Tinformation');
       } else {
-        console.error('Form submission failed');
+        console.error('Form submission failed:', result.message);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -142,12 +157,11 @@ const TutorForm = ({ onPageChange }) => {
           ))}
 
           <div>
-            <label style={{ fontWeight: '600', display: 'block', marginBottom: '5px', color: '#333' }}>Amount:</label>
+            <label style={{ fontWeight: '600', display: 'block', marginBottom: '5px', color: '#333' }}>Amount (Optional):</label>
             <select
               name="amount"
               value={formData.amount}
               onChange={handleChange}
-              required
               style={selectStyle}
               onFocus={() => setFocusedInput('amount')}
               onBlur={() => setFocusedInput('')}
@@ -161,12 +175,11 @@ const TutorForm = ({ onPageChange }) => {
           </div>
 
           <div>
-            <label style={{ fontWeight: '600', display: 'block', marginBottom: '5px', color: '#333' }}>Payment Option:</label>
+            <label style={{ fontWeight: '600', display: 'block', marginBottom: '5px', color: '#333' }}>Payment Option (Optional):</label>
             <select
               name="payment_option"
               value={formData.payment_option}
               onChange={handleChange}
-              required
               style={selectStyle}
               onFocus={() => setFocusedInput('payment_option')}
               onBlur={() => setFocusedInput('')}
