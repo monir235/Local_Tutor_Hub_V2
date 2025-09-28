@@ -53,7 +53,7 @@ const AcceptTutor = () => {
         ))}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .container {
           display: flex;
           flex-direction: column;
