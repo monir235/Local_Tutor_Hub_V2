@@ -24,7 +24,8 @@ import AcceptStu from './components/AcceptStu';
 import MoneyCard from './components/MoneyCard';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('Login'); // Default to Login page
+  const [currentPage, setCurrentPage] = useState('Admin'); 
+  // Default to Admin page
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
