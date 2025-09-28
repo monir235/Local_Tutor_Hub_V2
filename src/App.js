@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-{/*import Login from './components/Login';*/}
+
 import TeacherLogin from './components/TeacherLogin';
 import SignInWithEmail from './components/SignInWithEmail';
 import Home from './components/Home';
