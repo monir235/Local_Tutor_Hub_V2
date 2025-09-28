@@ -34,7 +34,7 @@ const StudentForm = ({ onPageChange }) => {
           school: '',
           salary: ''
         });
-        onPageChange('StuInformation'); // Navigate after submission
+        onPageChange('Stubd'); // Navigate after submission
       } else {
         console.error('Form submission failed');
       }

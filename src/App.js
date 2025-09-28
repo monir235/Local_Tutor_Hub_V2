@@ -136,7 +136,7 @@ function App() {
             ['stulogin', 'Student Login'],
             ['Profile', 'Profile'],
             
-            ['Stubd', 'Available Student'],
+            
             ['searchtutor', 'Search Tutor'],
             ['searchstu', 'Search Student'],
             ['redox', 'Accept Tutor'],
