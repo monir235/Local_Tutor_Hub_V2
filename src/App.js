@@ -135,7 +135,7 @@ function App() {
             ['tutorlogin', 'Tutor Login'],
             ['stulogin', 'Student Login'],
             ['Profile', 'Profile'],
-            ['Tinfo', 'Available Tutor'],
+            
             ['Stubd', 'Available Student'],
             ['searchtutor', 'Search Tutor'],
             ['searchstu', 'Search Student'],

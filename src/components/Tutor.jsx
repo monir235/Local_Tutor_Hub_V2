@@ -46,7 +46,7 @@ const TutorForm = ({ onPageChange }) => {
           amount: '',
           payment_option: ''
         });
-        onPageChange('Tinformation');
+        onPageChange('Tinfo');
       } else {
         console.error('Form submission failed');
       }
