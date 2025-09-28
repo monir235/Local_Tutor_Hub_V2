@@ -15,12 +15,10 @@ const SignInWithEmail = () => {
       return;
     }
     try {
-      const response = await axios.post('https://paloma-nonmicroscopic-marleigh.ngrok-free.app/register.php', {
-        name,
-        email,
-        password,
-        retypePassword,
-      });
+      const response = await axios.post(
+        'https://paloma-nonmicroscopic-marleigh.ngrok-free.app/register.php',
+        { name, email, password, retypePassword }
+      );
       console.log(response.data);
       setRegistrationMessage('Registration successful!');
       setName('');
@@ -78,7 +76,9 @@ const SignInWithEmail = () => {
           <p
             style={{
               marginTop: '12px',
-              color: registrationMessage.includes('successful') ? '#00ff9d' : '#ff9d9d',
+              color: registrationMessage.includes('successful')
+                ? '#00ff9d'
+                : '#ff9d9d',
               fontSize: '14px',
             }}
           >
@@ -125,9 +125,10 @@ const styles = {
     padding: '20px',
   },
   card: {
-    width: '400px',
+    width: '90%', // take most of screen on mobile
+    maxWidth: '400px', // limit width on larger screens
     margin: 'auto',
-    padding: '35px',
+    padding: '25px',
     borderRadius: '18px',
     background: 'rgba(255, 255, 255, 0.12)',
     backdropFilter: 'blur(18px)',
@@ -136,7 +137,7 @@ const styles = {
     color: '#fff',
   },
   header: {
-    marginBottom: '25px',
+    marginBottom: '20px',
     fontSize: '1.8rem',
     fontWeight: 'bold',
   },
@@ -171,10 +172,11 @@ const styles = {
     padding: '20px',
     borderRadius: '12px',
     marginTop: '30px',
+    fontSize: '14px',
   },
   icon: {
-    width: '30px',
-    margin: '0 10px',
+    width: '26px',
+    margin: '0 8px',
     borderRadius: '50%',
     boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
   },
