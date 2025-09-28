@@ -43,7 +43,8 @@ function App() {
       case 'Search':
         return <Search />;
       case 'TutorForm':
-        return <TutorForm />;
+        return <TutorForm onPageChange={handlePageChange} />;
+
       case 'Student':
         return <Student />;
       case 'StudentForm':
