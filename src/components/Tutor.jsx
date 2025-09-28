@@ -10,8 +10,7 @@ const TutorForm = ({ onPageChange }) => {
     institution: '',
     currentSubject: '',
     teachingExperience: '',
-    amount: '',
-    payment_option: ''
+   
   });
 
   const [focusedInput, setFocusedInput] = useState('');
@@ -59,8 +58,7 @@ const TutorForm = ({ onPageChange }) => {
           institution: '',
           currentSubject: '',
           teachingExperience: '',
-          amount: '',
-          payment_option: ''
+          
         });
         onPageChange('Tinformation');
       } else {
