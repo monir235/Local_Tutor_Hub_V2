@@ -6,7 +6,7 @@ const StuInformation = () => {
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        const response = await fetch('https://paloma-nonmicroscopic-marleigh.ngrok-free.app/students.php');
+        const response = await fetch('http://localhost/students.php');
         if (response.ok) {
           const data = await response.json();
           setStudents(data); // Array of student objects

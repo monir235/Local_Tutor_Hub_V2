@@ -16,7 +16,7 @@ const SignInWithEmail = () => {
       return;
     }
     try {
-      const response = await axios.post("https://paloma-nonmicroscopic-marleigh.ngrok-free.app/prof.php", {
+      const response = await axios.post("http://localhost/prof.php", {
         name,
         email,
         password,

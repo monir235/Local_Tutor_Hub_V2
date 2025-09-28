@@ -9,7 +9,7 @@ const SearchTutor = () => {
     const fetchTutorData = async () => {
       try {
         const response = await fetch(
-          `https://paloma-nonmicroscopic-marleigh.ngrok-free.app/searchtutor.php?location=${encodeURIComponent(searchLocation)}`
+          `http://localhost/searchtutor.php?location=${encodeURIComponent(searchLocation)}`
         );
         if (response.ok) {
           const data = await response.json();

@@ -9,7 +9,7 @@ const AcceptTutor = () => {
     const fetchAcceptedTutors = async () => {
       try {
         const response = await fetch(
-          "https://paloma-nonmicroscopic-marleigh.ngrok-free.app/redox.php"
+          "http://localhost/redox.php"
         );
 
         if (!response.ok) {

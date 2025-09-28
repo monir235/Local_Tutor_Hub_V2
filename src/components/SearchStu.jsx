@@ -9,7 +9,7 @@ const SearchStu = () => {
     const fetchStudentData = async () => {
       try {
         const response = await fetch(
-          `https://paloma-nonmicroscopic-marleigh.ngrok-free.app/searchstu.php?location=${encodeURIComponent(searchQuery)}`
+          `http://localhost/searchstu.php?location=${encodeURIComponent(searchQuery)}`
         );
         if (response.ok) {
           const data = await response.json();

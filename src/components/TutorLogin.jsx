@@ -33,7 +33,7 @@ const TutorLogin = ({ onPageChange }) => {
 
   const handleForgotPassword = async () => {
     try {
-      const response = await fetch('https://paloma-nonmicroscopic-marleigh.ngrok-free.app/forgotpassword.php', {
+      const response = await fetch('http://localhost/forgotpassword.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: forgotEmail })

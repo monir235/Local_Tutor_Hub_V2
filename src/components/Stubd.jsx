@@ -538,7 +538,7 @@ const Stubd = () => {
     setStudents(updatedStudents);
 
     try {
-      const response = await fetch('https://paloma-nonmicroscopic-marleigh.ngrok-free.app/stubd.php', {
+      const response = await fetch('http://localhost/stubd.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
