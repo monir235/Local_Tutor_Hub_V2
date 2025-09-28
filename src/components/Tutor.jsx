@@ -10,10 +10,9 @@ const TutorForm = ({ onPageChange }) => {
     institution: '',
     currentSubject: '',
     teachingExperience: '',
-   
+    amount: '',
+    payment_option: ''
   });
-
-  const [focusedInput, setFocusedInput] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,29 +25,15 @@ const TutorForm = ({ onPageChange }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Only send the fields that exist in the database
-    const backendData = {
-      name: formData.name,
-      availability: formData.availability,
-      mobileNumber: formData.mobileNumber,
-      email: formData.email,
-      location: formData.location,
-      institution: formData.institution,
-      currentSubject: formData.currentSubject,
-      teachingExperience: formData.teachingExperience
-    };
-
     try {
       const response = await fetch('http://localhost/tutor.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(backendData),
+        body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
-      console.log(result);
-
-      if (response.ok && result.status === "success") {
+      if (response.ok) {
+        console.log('Form submitted successfully');
         setFormData({
           name: '',
           availability: '',
@@ -58,129 +43,121 @@ const TutorForm = ({ onPageChange }) => {
           institution: '',
           currentSubject: '',
           teachingExperience: '',
-          
+          amount: '',
+          payment_option: ''
         });
         onPageChange('Tinformation');
       } else {
-        console.error('Form submission failed:', result.message);
+        console.error('Form submission failed');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
     }
   };
 
-  const inputStyle = {
-    width: '100%',
-    padding: '12px 15px',
-    border: '1px solid #ccc',
-    borderRadius: '10px',
-    outline: 'none',
-    transition: '0.3s',
-    fontSize: '15px',
-    marginBottom: '20px',
-    fontWeight: '500'
-  };
-
-  const inputFocusStyle = {
-    border: '1px solid #007bff',
-    boxShadow: '0 0 8px rgba(0,123,255,0.4)'
-  };
-
-  const selectStyle = {
-    ...inputStyle,
-    appearance: 'none',
-    cursor: 'pointer'
-  };
-
-  const buttonStyle = {
-    width: '100%',
-    padding: '14px',
-    backgroundColor: '#007bff',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '10px',
-    cursor: 'pointer',
-    fontSize: '16px',
-    fontWeight: '600',
-    transition: '0.3s'
-  };
-
   return (
     <div style={{
-      minHeight: '100vh',
-      padding: '50px 20px',
-      background: 'linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      fontFamily: 'Arial, sans-serif'
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #74ABE2, #5563DE)',
+      fontFamily: "'Poppins', sans-serif"
     }}>
       <div style={{
-        width: '100%',
-        maxWidth: '600px',
+        backdropFilter: 'blur(15px)',
+        background: 'rgba(255, 255, 255, 0.15)',
+        borderRadius: '20px',
         padding: '40px',
-        borderRadius: '15px',
-        backgroundColor: '#fff',
-        boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
+        width: '500px',
+        boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+        color: '#fff'
       }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '30px', color: '#007bff', fontWeight: '700' }}>Tutor Registration Form</h2>
+        <h2 style={{ textAlign: 'center', marginBottom: '30px', fontWeight: '600', textShadow: '0 2px 5px rgba(0,0,0,0.2)' }}>
+          Fill Up the Tutor Form
+        </h2>
+
         <form onSubmit={handleSubmit}>
           {[
-            { label: 'Name', name: 'name', type: 'text', placeholder: 'Enter your name' },
-            { label: 'Availability', name: 'availability', type: 'text', placeholder: 'YES/NO' },
-            { label: 'Mobile Number', name: 'mobileNumber', type: 'tel', placeholder: '+8801234567890' },
-            { label: 'Email', name: 'email', type: 'email', placeholder: 'example@mail.com' },
-            { label: 'Location', name: 'location', type: 'text', placeholder: 'City or Area' },
-            { label: 'Institution', name: 'institution', type: 'text', placeholder: 'Your current institution' },
-            { label: 'Current Subject', name: 'currentSubject', type: 'text', placeholder: 'Subject you teach' },
-            { label: 'Teaching Experience', name: 'teachingExperience', type: 'text', placeholder: 'e.g., 2 years' },
-          ].map((field, idx) => (
-            <div key={idx}>
-              <label style={{ fontWeight: '600', display: 'block', marginBottom: '5px', color: '#333' }}>{field.label}:</label>
+            { label: 'Name', name: 'name', type: 'text' },
+            { label: 'Availability', name: 'availability', type: 'text' },
+            { label: 'Mobile Number', name: 'mobileNumber', type: 'tel' },
+            { label: 'Email', name: 'email', type: 'email' },
+            { label: 'Location', name: 'location', type: 'text' },
+            { label: 'Institution', name: 'institution', type: 'text' },
+            { label: 'Current Subject', name: 'currentSubject', type: 'text' },
+            { label: 'Teaching Experience', name: 'teachingExperience', type: 'text' }
+          ].map(field => (
+            <div key={field.name} style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontWeight: '500', marginBottom: '5px' }}>{field.label}:</label>
               <input
                 type={field.type}
                 name={field.name}
                 value={formData[field.name]}
-                placeholder={field.placeholder}
                 onChange={handleChange}
                 required
                 style={{
-                  ...inputStyle,
-                  ...(focusedInput === field.name ? inputFocusStyle : {})
+                  width: '100%',
+                  padding: '12px 15px',
+                  borderRadius: '12px',
+                  border: 'none',
+                  outline: 'none',
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  color: '#fff',
+                  fontSize: '16px',
+                  boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)',
+                  transition: '0.3s'
                 }}
-                onFocus={() => setFocusedInput(field.name)}
-                onBlur={() => setFocusedInput('')}
               />
             </div>
           ))}
 
-          <div>
-            <label style={{ fontWeight: '600', display: 'block', marginBottom: '5px', color: '#333' }}>Amount (Optional):</label>
+          <div style={{ marginBottom: '20px' }}>
+            <label style={{ display: 'block', fontWeight: '500', marginBottom: '5px' }}>Amount:</label>
             <select
               name="amount"
               value={formData.amount}
               onChange={handleChange}
-              style={selectStyle}
-              onFocus={() => setFocusedInput('amount')}
-              onBlur={() => setFocusedInput('')}
+              required
+              style={{
+                width: '100%',
+                padding: '12px 15px',
+                borderRadius: '12px',
+                border: 'none',
+                outline: 'none',
+                background: 'rgba(255, 255, 255, 0.2)',
+                color: '#fff',
+                fontSize: '16px',
+                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)',
+                transition: '0.3s'
+              }}
             >
               <option value="">Select Amount</option>
               <option value="100">100</option>
               <option value="200">200</option>
-              <option value="400">400</option>
-              <option value="500">1000</option>
+              <option value="500">500</option>
             </select>
           </div>
 
-          <div>
-            <label style={{ fontWeight: '600', display: 'block', marginBottom: '5px', color: '#333' }}>Payment Option (Optional):</label>
+          <div style={{ marginBottom: '30px' }}>
+            <label style={{ display: 'block', fontWeight: '500', marginBottom: '5px' }}>Payment Option:</label>
             <select
               name="payment_option"
               value={formData.payment_option}
               onChange={handleChange}
-              style={selectStyle}
-              onFocus={() => setFocusedInput('payment_option')}
-              onBlur={() => setFocusedInput('')}
+              required
+              style={{
+                width: '100%',
+                padding: '12px 15px',
+                borderRadius: '12px',
+                border: 'none',
+                outline: 'none',
+                background: 'rgba(255, 255, 255, 0.2)',
+                color: '#fff',
+                fontSize: '16px',
+                boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.2)',
+                transition: '0.3s'
+              }}
             >
               <option value="">Select Payment Option</option>
               <option value="Bikash">Bikash</option>
@@ -189,11 +166,21 @@ const TutorForm = ({ onPageChange }) => {
             </select>
           </div>
 
-          <button
-            type="submit"
-            style={buttonStyle}
-            onMouseOver={e => e.currentTarget.style.backgroundColor = '#0056b3'}
-            onMouseOut={e => e.currentTarget.style.backgroundColor = '#007bff'}
+          <button type="submit" style={{
+            width: '100%',
+            padding: '15px',
+            borderRadius: '12px',
+            border: 'none',
+            fontWeight: '600',
+            fontSize: '16px',
+            cursor: 'pointer',
+            color: '#fff',
+            background: 'linear-gradient(45deg, #5563DE, #74ABE2)',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+            transition: '0.3s'
+          }}
+          onMouseOver={e => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseOut={e => e.currentTarget.style.transform = 'scale(1)'}
           >
             Submit
           </button>
