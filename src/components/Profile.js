@@ -34,7 +34,7 @@ const Profile = ({ onPageChange }) => {
   };
 
   const handleLogout = () => {
-    onPageChange('Login');
+    onPageChange('TutorLogin');
   };
 
   return (

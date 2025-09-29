@@ -25,7 +25,7 @@ function Home() {
 
   const imageStyle = {
     width: '100%',
-    height: '200px',
+    height: '320px',
     objectFit: 'cover',
     borderTopLeftRadius: '20px',
     borderTopRightRadius: '20px',

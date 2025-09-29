@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-
 import TeacherLogin from './components/TeacherLogin';
-import SignInWithEmail from './components/SignInWithEmail';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import Search from './components/Search';
@@ -24,19 +22,14 @@ import AcceptStu from './components/AcceptStu';
 import MoneyCard from './components/MoneyCard';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('Admin'); 
-  // Default to Admin page
+  const [currentPage, setCurrentPage] = useState('Admin');
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+  const handlePageChange = (page) => setCurrentPage(page);
 
   const renderPage = () => {
     switch (currentPage) {
       case 'Admin':
         return <Home />;
-      case 'SignIn':
-        return <SignInWithEmail />;
       case 'TeacherLogin':
         return <TeacherLogin />;
       case 'Profile':
@@ -45,7 +38,6 @@ function App() {
         return <Search />;
       case 'TutorForm':
         return <TutorForm />;
-
       case 'Student':
         return <Student />;
       case 'StudentForm':
@@ -83,50 +75,57 @@ function App() {
     }
   };
 
-  // Button style for modern UI
+  // Modern nav button style
   const navButtonStyle = {
-    padding: '12px 18px',
-    fontSize: '14px',
+    padding: '12px 20px',
+    fontSize: '15px',
+    fontWeight: '600',
+    color: '#fff',
     background: 'linear-gradient(135deg, #4f46e5, #3b82f6)',
-    color: 'white',
     border: 'none',
-    borderRadius: '10px',
+    borderRadius: '12px',
     cursor: 'pointer',
-    margin: '8px',
-    fontWeight: '500',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-    transition: 'all 0.3s ease',
+    margin: '6px',
+    transition: 'all 0.4s ease',
+    boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
   };
 
   const navButtonHover = {
-    transform: 'translateY(-2px)',
-    boxShadow: '0 6px 16px rgba(0,0,0,0.3)',
+    transform: 'translateY(-3px)',
+    boxShadow: '0 12px 24px rgba(0,0,0,0.35)',
+    background: 'linear-gradient(135deg, #3b82f6, #4f46e5)',
   };
 
   return (
     <div
       className="App"
       style={{
-        background: 'linear-gradient(135deg, #1e3a8a, #2563eb, #60a5fa)',
         minHeight: '100vh',
+        background: 'linear-gradient(145deg, #1e3a8a, #2563eb, #60a5fa)',
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
+        padding: '20px',
+        fontFamily: "'Inter', sans-serif",
       }}
     >
+      {/* Navigation */}
       {currentPage !== 'Login' && (
         <div
           style={{
             display: 'flex',
             flexWrap: 'wrap',
             justifyContent: 'center',
-            padding: '15px',
+            gap: '12px',
+            padding: '20px',
             margin: '20px auto',
             background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(12px)',
-            borderRadius: '20px',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)',
-            width: '90%',
+            backdropFilter: 'blur(15px)',
+            borderRadius: '25px',
+            boxShadow: '0 12px 36px rgba(0,0,0,0.25)',
             maxWidth: '1000px',
+            width: '90%',
+            transition: 'all 0.3s ease',
           }}
         >
           {[
@@ -135,8 +134,6 @@ function App() {
             ['tutorlogin', 'Tutor Login'],
             ['stulogin', 'Student Login'],
             ['Profile', 'Profile'],
-            
-            
             ['searchtutor', 'Search Tutor'],
             ['searchstu', 'Search Student'],
             ['redox', 'Accept Tutor'],
@@ -159,7 +156,19 @@ function App() {
           ))}
         </div>
       )}
-      <div style={{ flex: 1 }}>{renderPage()}</div>
+
+      {/* Page Content */}
+      <div
+        style={{
+          flex: 1,
+          width: '100%',
+          maxWidth: '1200px',
+          marginTop: '10px',
+          transition: 'all 0.3s ease',
+        }}
+      >
+        {renderPage()}
+      </div>
     </div>
   );
 }
