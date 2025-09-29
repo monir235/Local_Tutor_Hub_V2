@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { FaFacebook, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaInstagram, FaGithub, FaUniversity } from 'react-icons/fa';
+
 
 const SignInWithEmail = () => {
   const [name, setName] = useState("");
@@ -82,12 +83,24 @@ const SignInWithEmail = () => {
         )}
       </div>
 
-      {/* Footer */}
-      <footer style={styles.footer}>
-        <FaFacebook style={styles.icon} />
-        <FaTwitter style={styles.icon} />
-        <FaInstagram style={styles.icon} />
-      </footer>
+     {/* Footer */}
+<footer style={styles.footer}>
+  <a href="https://www.facebook.com/sirajummonir.monir.5" target="_blank" rel="noopener noreferrer">
+    <FaFacebook style={styles.icon} />
+  </a>
+  <a href="https://twitter.com/ayon_chayo33456" target="_blank" rel="noopener noreferrer">
+    <FaTwitter style={styles.icon} />
+  </a>
+  <a href="https://www.instagram.com/monir_chayon/" target="_blank" rel="noopener noreferrer">
+    <FaInstagram style={styles.icon} />
+  </a>
+  <a href="https://github.com/monir235" target="_blank" rel="noopener noreferrer">
+    <FaGithub style={styles.icon} />
+  </a>
+  <a href="https://web.cu.ac.bd/v2/" target="_blank" rel="noopener noreferrer">
+    <FaUniversity style={styles.icon} />
+  </a>
+</footer>
     </div>
   );
 };
@@ -156,7 +169,7 @@ const styles = {
   },
   icon: {
     color: "#fff",
-    fontSize: "22px",
+    fontSize: "45px",
     cursor: "pointer",
   },
 };

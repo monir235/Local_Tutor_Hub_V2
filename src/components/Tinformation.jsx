@@ -50,7 +50,7 @@ const Tinformation = () => {
 
   return (
     <div className="container">
-      <h1>Available Tutors</h1>
+      <h1>Available </h1>
       <div className="cardContainer">
         {tutors.map((tutor, index) => (
           <div key={index} className={`card ${tutor.accepted ? 'accepted' : ''}`}>
