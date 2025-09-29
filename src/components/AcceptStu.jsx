@@ -28,12 +28,11 @@ const AcceptStu = () => {
         {acceptedStudents.length === 0 && <p style={{ color: '#fff' }}>No students available</p>}
         {acceptedStudents.map((student, index) => (
           <div key={index} className="card">
-            <h3>{student.name}</h3>
-            <p><strong>Mobile Number:</strong> {student.mobileNumber}</p>
+            <h3>{student.studentId}</h3>
+            <p><strong>Name:</strong> {student.name}</p>
             <p><strong>Email:</strong> {student.email}</p>
-            <p><strong>Salary Offer:</strong> {student.salaryOffer}</p>
-            <p><strong>Days per Week:</strong> {student.dayPerWeek}</p>
             <p><strong>Location:</strong> {student.location}</p>
+            <p><strong>School:</strong> {student.school}</p>
           </div>
         ))}
       </div>

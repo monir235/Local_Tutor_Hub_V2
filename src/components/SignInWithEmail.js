@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const SignInWithEmail = () => {
+const SignInWithEmail = ({ onPageChange }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,6 +35,37 @@ const SignInWithEmail = () => {
     <div style={styles.pageBackground}>
       <div style={styles.card}>
         <h2 style={styles.header}>Create Account</h2>
+
+        {/* Role selection buttons inside the card */}
+        <div style={styles.roleButtonsContainer}>
+          <button
+            style={{
+              ...styles.roleButton,
+              background: 'linear-gradient(90deg, #ff512f, #dd2476)',
+            }}
+            onClick={() =>
+              onPageChange
+                ? onPageChange('TutorLogin')
+                : alert('onPageChange not provided')
+            }
+          >
+            As Tutor
+          </button>
+          <button
+            style={{
+              ...styles.roleButton,
+              background: 'linear-gradient(90deg, #00c6ff, #0072ff)',
+            }}
+            onClick={() =>
+              onPageChange
+                ? onPageChange('StuLogin')
+                : alert('onPageChange not provided')
+            }
+          >
+            As Student
+          </button>
+        </div>
+
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -72,6 +103,7 @@ const SignInWithEmail = () => {
             Register
           </button>
         </form>
+
         {registrationMessage && (
           <p
             style={{
@@ -90,19 +122,39 @@ const SignInWithEmail = () => {
       {/* Footer */}
       <footer style={styles.footer}>
         <div>
-          <a href="https://www.facebook.com/sirajummonir.monir.5" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://www.facebook.com/sirajummonir.monir.5"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img src="/fb1.png" alt="Facebook" style={styles.icon} />
           </a>
-          <a href="https://twitter.com/ayon_chayo33456" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://twitter.com/ayon_chayo33456"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img src="/twitter.jpeg" alt="Twitter" style={styles.icon} />
           </a>
-          <a href="https://www.instagram.com/monir_chayon/" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://www.instagram.com/monir_chayon/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img src="/insta.jpeg" alt="Instagram" style={styles.icon} />
           </a>
-          <a href="https://github.com/monir235" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://github.com/monir235"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img src="/git.png" alt="GitHub" style={styles.icon} />
           </a>
-          <a href="https://web.cu.ac.bd/v2/" target="_blank" rel="noopener noreferrer">
+          <a
+            href="https://web.cu.ac.bd/v2/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <img src="/Culogo.jpeg" alt="CU" style={styles.icon} />
           </a>
         </div>
@@ -116,30 +168,52 @@ const SignInWithEmail = () => {
 
 const styles = {
   pageBackground: {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    background: 'linear-gradient(135deg, #667eea, #764ba2)',
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    padding: '20px',
-  },
-  card: {
-    width: '90%', // take most of screen on mobile
-    maxWidth: '400px', // limit width on larger screens
-    margin: 'auto',
-    padding: '25px',
-    borderRadius: '18px',
-    background: 'rgba(255, 255, 255, 0.12)',
-    backdropFilter: 'blur(18px)',
-    boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
-    textAlign: 'center',
-    color: '#fff',
-  },
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-start', // not space-between, so card stays at top
+  background: 'linear-gradient(135deg, #667eea, #764ba2)',
+  fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+  padding: '20px',
+},
+
+ card: {
+  width: '90%',
+  maxWidth: '400px',
+  margin: 'auto',
+  padding: '25px',
+  borderRadius: '18px',
+  background: 'rgba(255, 255, 255, 0.12)',
+  backdropFilter: 'blur(18px)',
+  boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+  textAlign: 'center',
+  color: '#fff',
+  overflow: 'visible',  // make sure content is not clipped
+  display: 'flex',
+  flexDirection: 'column', // stack children vertically
+},
+
   header: {
     marginBottom: '20px',
     fontSize: '1.8rem',
     fontWeight: 'bold',
+  },
+  roleButtonsContainer: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '20px',
+  },
+  roleButton: {
+    flex: 1,
+    padding: '12px',
+    margin: '0 5px',
+    border: 'none',
+    borderRadius: '10px',
+    color: '#fff',
+    fontWeight: '600',
+    cursor: 'pointer',
+    fontSize: '14px',
+    transition: 'all 0.3s ease',
   },
   input: {
     width: '100%',

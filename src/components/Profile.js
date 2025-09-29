@@ -77,7 +77,7 @@ const Profile = ({ onPageChange }) => {
           <input type="text" value={userData.status} onChange={(e) => handleChange('status', e.target.value)} style={styles.input} />
         </div>
 
-        <button onClick={handleLogout} style={styles.button}>Logout</button>
+        <button onClick={handleLogout} style={styles.button}>Logouts</button>
       </div>
     </div>
   );
