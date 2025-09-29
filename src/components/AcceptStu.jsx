@@ -6,7 +6,7 @@ const AcceptStu = () => {
   useEffect(() => {
     const fetchAcceptedStudents = async () => {
       try {
-        const response = await fetch('http://localhost/redol.php');
+        const response = await fetch('https://paloma-nonmicroscopic-marleigh.ngrok-free.app/redol.php');
         if (response.ok) {
           const data = await response.json();
           setAcceptedStudents(data);
