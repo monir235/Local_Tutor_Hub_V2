@@ -9,9 +9,8 @@ const Tinfo = () => {
     fetch('http://localhost/tinformation.php')
       .then(res => res.json())
       .then(data => {
-        // Ensure each tutor has a tutorId
         const mappedData = data.map((item, index) => ({
-          tutorId: item.id || index + 1, // use 'id' if exists, else index
+          tutorId: item.id || index + 1,
           ...item,
           accepted: false
         }));
@@ -24,9 +23,17 @@ const Tinfo = () => {
       });
   }, []);
 
+  // Scroll straight to bottom AFTER cards load
+  useEffect(() => {
+    if (cards.length > 0) {
+      setTimeout(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }, 100); // small delay to ensure DOM is painted
+    }
+  }, [cards]);
+
   // Handle accepting a tutor
   const handleAccept = async (tutorId) => {
-    // Only one card can be accepted at a time
     const updatedCards = cards.map(card => ({
       ...card,
       accepted: card.tutorId === tutorId
@@ -39,9 +46,7 @@ const Tinfo = () => {
       try {
         const response = await fetch('http://localhost/info.php', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             tutorId: acceptedTutor.tutorId,
             name: acceptedTutor.name,
@@ -56,7 +61,7 @@ const Tinfo = () => {
         });
 
         const text = await response.text();
-        console.log(text); // Should print "Data inserted successfully"
+        console.log(text);
       } catch (error) {
         console.error('Error sending data:', error);
       }
@@ -86,7 +91,6 @@ const Tinfo = () => {
         ))}
       </div>
 
-      {/* CSS */}
       <style jsx>{`
         .container {
           display: flex;

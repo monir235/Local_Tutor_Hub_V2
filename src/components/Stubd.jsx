@@ -23,6 +23,15 @@ const Stubd = () => {
       });
   }, []);
 
+  // 👇 Auto-scroll to bottom when students are loaded
+  useEffect(() => {
+    if (students.length > 0) {
+      setTimeout(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      }, 100); // delay ensures DOM is painted
+    }
+  }, [students]);
+
   const handleAccept = async (studentId) => {
     const acceptedStudent = students.find(
       (student) => student.studentId === studentId

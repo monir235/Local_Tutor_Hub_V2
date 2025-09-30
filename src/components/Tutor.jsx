@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const TutorForm = ({ onPageChange }) => {
   const [formData, setFormData] = useState({
@@ -14,6 +14,25 @@ const TutorForm = ({ onPageChange }) => {
     payment_option: ''
   });
 
+  // Fetch latest profile1 record
+  useEffect(() => {
+    const fetchLatestProfile = async () => {
+      try {
+        const res = await fetch("http://localhost/getlatestprofile.php");
+        const data = await res.json();
+        setFormData(prev => ({
+          ...prev,
+          name: data.name || '',
+          email: data.email || ''
+        }));
+      } catch (err) {
+        console.error("Error fetching latest profile:", err);
+      }
+    };
+
+    fetchLatestProfile();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
@@ -24,7 +43,6 @@ const TutorForm = ({ onPageChange }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch('http://localhost/tutor.php', {
         method: 'POST',
@@ -54,6 +72,7 @@ const TutorForm = ({ onPageChange }) => {
       console.error('Error submitting form:', error);
     }
   };
+
 
   return (
     <div style={{
