@@ -9,7 +9,7 @@ const SearchTutor = () => {
     const fetchTutorData = async () => {
       try {
         const response = await fetch(
-          `http://localhost/searchtutor.php?location=${encodeURIComponent(searchLocation)}`
+          `https://sirajumonir.wuaze.com/searchtutor.php?location=${encodeURIComponent(searchLocation)}`
         );
         if (response.ok) {
           const data = await response.json();
