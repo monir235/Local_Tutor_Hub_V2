@@ -35,7 +35,7 @@ const SearchTutor = () => {
 
   return (
     <div className="container">
-      <h1>Search Tutor by Location</h1>
+      <h1>Available Tutors</h1>
       <div className="search">
         <input
           type="text"

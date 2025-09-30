@@ -39,7 +39,7 @@ const SearchStu = () => {
 
   return (
     <div className="container">
-      <h1>Search Student by Location</h1>
+      <h1>Available Students</h1>
       <div className="search">
         <input
           type="text"

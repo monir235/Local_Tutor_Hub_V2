@@ -134,10 +134,10 @@ function App() {
             ['tutorlogin', 'Tutor Login'],
             ['stulogin', 'Student Login'],
             ['Profile', 'Profile'],
-            ['searchtutor', 'Search Tutor'],
-            ['searchstu', 'Search Student'],
-            ['redox', 'Accept Tutor'],
-            ['redol', 'Accept Student'],
+            ['searchtutor', 'Available Tutor'],
+            ['searchstu', 'Available Student'],
+            ['redox', 'Accepted Tutor'],
+            ['redol', 'Accepted Student'],
             ['crut', 'Collection'],
           ].map(([page, label]) => (
             <button
