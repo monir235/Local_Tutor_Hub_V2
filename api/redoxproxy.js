@@ -7,20 +7,25 @@ export default async function handler(req, res) {
 
     let jsonData;
 
-    // Extract JSON from the text using regex (matches array or object)
-    const jsonMatch = text.match(/\[.*\]|\{.*\}/s);
-    if (jsonMatch) {
-      try {
-        jsonData = JSON.parse(jsonMatch[0]);
-      } catch (e) {
-        jsonData = { error: "Failed to parse JSON", raw: jsonMatch[0] };
+    try {
+      // Try parsing directly first
+      jsonData = JSON.parse(text);
+    } catch {
+      // Fallback: extract JSON array or object from any HTML wrapper
+      const match = text.match(/\[.*\]|\{.*\}/s); // matches first array or object
+      if (match) {
+        try {
+          jsonData = JSON.parse(match[0]);
+        } catch {
+          jsonData = { error: "Failed to parse JSON", raw: match[0] };
+        }
+      } else {
+        jsonData = { error: "No JSON found in response", raw: text };
       }
-    } else {
-      jsonData = { error: "No JSON found in response", raw: text };
     }
 
-    // Set proper CORS headers
-    res.setHeader("Access-Control-Allow-Origin", "https://local-tutor-hub-v2.vercel.app"); // or your frontend URL
+    // Set CORS headers
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
     res.setHeader("Content-Type", "application/json");
 
