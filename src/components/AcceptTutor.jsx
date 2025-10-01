@@ -8,9 +8,12 @@ const AcceptTutor = () => {
   useEffect(() => {
     const fetchAcceptedTutors = async () => {
       try {
-        const response = await fetch(
-          "https://sirajummonir.wuaze.com/redox.php"
-        );
+        const response = await fetch("/api/redoxproxy")
+          .then(res => res.json())
+          .then(data => console.log(data))
+          .catch(err => console.error(err));
+
+
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
