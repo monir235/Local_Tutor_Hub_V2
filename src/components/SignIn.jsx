@@ -18,11 +18,19 @@ const SignInWithEmail = () => {
     }
 
     try {
-      const response = await axios.post("https://sirajummonir.wuaze.com/prof.php", {
-        name,
-        email,
-        password,
-        retypePassword
+      // Send data as JSON
+      const response = await axios({
+        method: 'post',
+        url: "https://sirajummonir.wuaze.com/prof.php",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        data: {
+          name,
+          email,
+          password,
+          retypePassword
+        }
       });
 
       if (response.data.status === "success") {
@@ -36,7 +44,13 @@ const SignInWithEmail = () => {
       }
     } catch (error) {
       console.error(error);
-      setRegistrationMessage("❌ Registration failed. Try again.");
+
+      // Detect CORS/network errors
+      if (error.response) {
+        setRegistrationMessage("❌ " + (error.response.data.message || "Registration failed."));
+      } else {
+        setRegistrationMessage("❌ Network or CORS error. Make sure prof.php allows your Netlify domain.");
+      }
     }
   };
 
