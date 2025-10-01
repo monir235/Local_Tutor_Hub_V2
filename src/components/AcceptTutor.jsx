@@ -5,38 +5,24 @@ const AcceptTutor = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchAcceptedTutors = async () => {
-      try {
-        const response = await fetch("/api/redoxproxy")
-          .then(res => res.json())
-          .then(data => console.log(data))
-          .catch(err => console.error(err));
+  try {
+    const response = await fetch("/api/redoxProxy");
+    const data = await response.json();
 
+    if (!Array.isArray(data)) {
+      throw new Error(data.error || "API did not return an array");
+    }
 
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const text = await response.text();
-        console.log("Raw response from PHP:", text);
-
-        const data = JSON.parse(text);
-        console.log("Parsed data:", data, Array.isArray(data));
-
-        if (!Array.isArray(data)) {
-          throw new Error("API did not return an array");
-        }
-
-        setAcceptedTutors(data);
-      } catch (err) {
-        console.error("Error fetching accepted tutor information:", err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+    setAcceptedTutors(data);
+  } catch (err) {
+    console.error("Error fetching accepted tutor information:", err);
+    setError(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
 
     fetchAcceptedTutors();
   }, []);

@@ -1,21 +1,26 @@
-// /api/redoxProxy.js
+// frontend/api/redoxProxy.js
 
 export default async function handler(req, res) {
   try {
-    // Fetch your Wuaze PHP output
     const response = await fetch("https://sirajummonir.wuaze.com/redox.php");
-    const data = await response.text(); // Use text() because Wuaze may inject HTML
+    const text = await response.text();
 
-    // Optional: parse JSON safely
     let jsonData;
-    try {
-      jsonData = JSON.parse(data);
-    } catch (e) {
-      jsonData = { error: "Invalid JSON from Wuaze", raw: data };
+
+    // Try to extract JSON from the text
+    const jsonMatch = text.match(/\{.*\}|\[.*\]/s); // match JSON object or array
+    if (jsonMatch) {
+      try {
+        jsonData = JSON.parse(jsonMatch[0]);
+      } catch (e) {
+        jsonData = { error: "Failed to parse JSON", raw: jsonMatch[0] };
+      }
+    } else {
+      jsonData = { error: "No JSON found in response", raw: text };
     }
 
     // Set CORS headers
-    res.setHeader("Access-Control-Allow-Origin", "*"); // or your frontend URL
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
     res.setHeader("Content-Type", "application/json");
 
