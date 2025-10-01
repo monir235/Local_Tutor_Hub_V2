@@ -16,12 +16,16 @@ const AcceptTutor = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // Get raw text to debug what comes back
         const text = await response.text();
         console.log("Raw response from PHP:", text);
 
-        // Try parsing JSON
         const data = JSON.parse(text);
+        console.log("Parsed data:", data, Array.isArray(data));
+
+        if (!Array.isArray(data)) {
+          throw new Error("API did not return an array");
+        }
+
         setAcceptedTutors(data);
       } catch (err) {
         console.error("Error fetching accepted tutor information:", err);
@@ -49,32 +53,34 @@ const AcceptTutor = () => {
         {acceptedTutors.length === 0 && (
           <p style={{ color: "#fff" }}>No tutors available</p>
         )}
-        {acceptedTutors.map((tutor, index) => (
-          <div key={index} className="card accepted">
-            <h3>{tutor.name}</h3>
-            <p>
-              <strong>Availability:</strong> {tutor.availability}
-            </p>
-            <p>
-              <strong>Mobile:</strong> {tutor.mobileNumber}
-            </p>
-            <p>
-              <strong>Email:</strong> {tutor.email}
-            </p>
-            <p>
-              <strong>Location:</strong> {tutor.location}
-            </p>
-            <p>
-              <strong>Institution:</strong> {tutor.institution}
-            </p>
-            <p>
-              <strong>Subject:</strong> {tutor.currentSubject}
-            </p>
-          </div>
-        ))}
+        {acceptedTutors.map((tutor, index) => {
+          console.log("Rendering tutor:", tutor);
+          return (
+            <div key={index} className="card accepted">
+              <h3>{tutor.name}</h3>
+              <p>
+                <strong>Availability:</strong> {tutor.availability}
+              </p>
+              <p>
+                <strong>Mobile:</strong> {tutor.mobileNumber}
+              </p>
+              <p>
+                <strong>Email:</strong> {tutor.email}
+              </p>
+              <p>
+                <strong>Location:</strong> {tutor.location}
+              </p>
+              <p>
+                <strong>Institution:</strong> {tutor.institution}
+              </p>
+              <p>
+                <strong>Subject:</strong> {tutor.currentSubject}
+              </p>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Inline CSS for plain React */}
       <style>{`
         .container {
           display: flex;
@@ -103,10 +109,12 @@ const AcceptTutor = () => {
           background: #ffffff;
           box-shadow: 0 8px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.07);
           font-weight: 500;
+          color: #000; /* Ensure text is visible */
         }
         .card.accepted {
           background: #d4edda;
           border: 1px solid #28a745;
+          color: #000; /* Black text on green background */
         }
         .card h3 {
           margin-bottom: 12px;
@@ -115,7 +123,7 @@ const AcceptTutor = () => {
         }
         .card p {
           margin: 6px 0;
-          color: #333;
+          color: #000;
         }
         @media (max-width: 700px) {
           .card {
