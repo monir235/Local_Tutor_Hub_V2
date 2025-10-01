@@ -1,36 +1,29 @@
 // frontend/api/redoxProxy.js
+import mysql from 'mysql2/promise';
 
 export default async function handler(req, res) {
+  // Connect to your MySQL database directly
+  const conn = await mysql.createConnection({
+    host: 'sql306.infinityfree.com',
+    user: 'if0_40062061',
+    password: 'DW101BxteSQ0c',
+    database: 'if0_40062061_sirajdb',
+  });
+
   try {
-    const response = await fetch("https://sirajummonir.wuaze.com/redox.php");
-    const text = await response.text();
-
-    let jsonData;
-
-    try {
-      // Try parsing directly first
-      jsonData = JSON.parse(text);
-    } catch {
-      // Fallback: extract JSON array or object from any HTML wrapper
-      const match = text.match(/\[.*\]|\{.*\}/s); // matches first array or object
-      if (match) {
-        try {
-          jsonData = JSON.parse(match[0]);
-        } catch {
-          jsonData = { error: "Failed to parse JSON", raw: match[0] };
-        }
-      } else {
-        jsonData = { error: "No JSON found in response", raw: text };
-      }
-    }
+    const [rows] = await conn.execute(
+      'SELECT name, availability, mobileNumber, email, location, institution, currentSubject FROM accept'
+    );
 
     // Set CORS headers
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-    res.setHeader("Content-Type", "application/json");
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    res.setHeader('Content-Type', 'application/json');
 
-    res.status(200).json(jsonData);
+    res.status(200).json(rows); // Return clean JSON
   } catch (err) {
     res.status(500).json({ error: err.message });
+  } finally {
+    await conn.end();
   }
 }
