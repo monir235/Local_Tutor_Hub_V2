@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaFacebook, FaTwitter, FaInstagram, FaGithub, FaUniversity } from 'react-icons/fa';
 
-
 const SignInWithEmail = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,34 +11,37 @@ const SignInWithEmail = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (password !== retypePassword) {
       setRegistrationMessage("❌ Passwords do not match.");
       return;
     }
+
     try {
       const response = await axios.post("https://sirajummonir.wuaze.com/prof.php", {
         name,
         email,
         password,
-        retypePassword,
+        retypePassword
       });
-      console.log(response.data);
-      setRegistrationMessage("✅ Registration successful!");
-      setName("");
-      setEmail("");
-      setPassword("");
-      setRetypePassword("");
+
+      if (response.data.status === "success") {
+        setRegistrationMessage("✅ " + response.data.message);
+        setName("");
+        setEmail("");
+        setPassword("");
+        setRetypePassword("");
+      } else {
+        setRegistrationMessage("❌ " + response.data.message);
+      }
     } catch (error) {
       console.error(error);
       setRegistrationMessage("❌ Registration failed. Try again.");
     }
   };
 
-  
-
   return (
     <div style={styles.pageBackground}>
-      {/* Glassmorphism Card */}
       <div style={styles.card}>
         <h2 style={styles.header}>Create Account</h2>
 
@@ -64,13 +66,11 @@ const SignInWithEmail = () => {
             );
           })}
 
-          {/* Register Button */}
           <button type="submit" style={styles.button}>
             Register
           </button>
         </form>
 
-        {/* Message */}
         {registrationMessage && (
           <p
             style={{
@@ -85,24 +85,23 @@ const SignInWithEmail = () => {
         )}
       </div>
 
-     {/* Footer */}
-<footer style={styles.footer}>
-  <a href="https://www.facebook.com/sirajummonir.monir.5" target="_blank" rel="noopener noreferrer">
-    <FaFacebook style={styles.icon} />
-  </a>
-  <a href="https://twitter.com/ayon_chayo33456" target="_blank" rel="noopener noreferrer">
-    <FaTwitter style={styles.icon} />
-  </a>
-  <a href="https://www.instagram.com/monir_chayon/" target="_blank" rel="noopener noreferrer">
-    <FaInstagram style={styles.icon} />
-  </a>
-  <a href="https://github.com/monir235" target="_blank" rel="noopener noreferrer">
-    <FaGithub style={styles.icon} />
-  </a>
-  <a href="https://web.cu.ac.bd/v2/" target="_blank" rel="noopener noreferrer">
-    <FaUniversity style={styles.icon} />
-  </a>
-</footer>
+      <footer style={styles.footer}>
+        <a href="https://www.facebook.com/sirajummonir.monir.5" target="_blank" rel="noopener noreferrer">
+          <FaFacebook style={styles.icon} />
+        </a>
+        <a href="https://twitter.com/ayon_chayo33456" target="_blank" rel="noopener noreferrer">
+          <FaTwitter style={styles.icon} />
+        </a>
+        <a href="https://www.instagram.com/monir_chayon/" target="_blank" rel="noopener noreferrer">
+          <FaInstagram style={styles.icon} />
+        </a>
+        <a href="https://github.com/monir235" target="_blank" rel="noopener noreferrer">
+          <FaGithub style={styles.icon} />
+        </a>
+        <a href="https://web.cu.ac.bd/v2/" target="_blank" rel="noopener noreferrer">
+          <FaUniversity style={styles.icon} />
+        </a>
+      </footer>
     </div>
   );
 };
