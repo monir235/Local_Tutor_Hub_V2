@@ -18,7 +18,7 @@ const TutorForm = ({ onPageChange }) => {
   useEffect(() => {
     const fetchLatestProfile = async () => {
       try {
-        const res = await fetch("http://localhost/getlatestprofile.php");
+        const res = await fetch("https://sirajummonir.wuaze.com/getlatestprofile.php");
         const data = await res.json();
         setFormData(prev => ({
           ...prev,
@@ -44,7 +44,7 @@ const TutorForm = ({ onPageChange }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost/tutor.php', {
+      const response = await fetch('https://sirajummonir.wuaze.com/tutor.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

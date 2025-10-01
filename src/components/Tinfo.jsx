@@ -6,7 +6,7 @@ const Tinfo = () => {
 
   // Fetch tutor data from PHP backend
   useEffect(() => {
-    fetch('http://localhost/tinformation.php')
+    fetch('https://sirajummonir.wuaze.com/tinformation.php')
       .then(res => res.json())
       .then(data => {
         const mappedData = data.map((item, index) => ({
@@ -44,7 +44,7 @@ const Tinfo = () => {
 
     if (acceptedTutor) {
       try {
-        const response = await fetch('http://localhost/info.php', {
+        const response = await fetch('https://sirajummonir.wuaze.com/info.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

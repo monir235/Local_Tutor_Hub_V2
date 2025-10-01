@@ -17,7 +17,7 @@ const SignInWithEmail = () => {
       return;
     }
     try {
-      const response = await axios.post("http://localhost/prof.php", {
+      const response = await axios.post("https://sirajummonir.wuaze.com/prof.php", {
         name,
         email,
         password,

@@ -46,7 +46,7 @@ const Stubd = () => {
     setAcceptedId(studentId);
 
     try {
-      const response = await fetch("http://localhost/stubd.php", {
+      const response = await fetch("https://sirajummonir.wuaze.com/stubd.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

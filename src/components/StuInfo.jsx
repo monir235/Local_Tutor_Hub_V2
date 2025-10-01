@@ -20,7 +20,7 @@ const StudentForm = ({ onPageChange }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost/student.php', {
+      const response = await fetch('https://sirajummonir.wuaze.com/student.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

@@ -13,7 +13,7 @@ const MoneyCard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost/getStuaccept.php');
+        const response = await axios.get('https://sirajummonir.wuaze.com/getStuaccept.php');
         const data = response.data;
 
         const students = data.students;
