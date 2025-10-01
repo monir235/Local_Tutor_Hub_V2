@@ -9,7 +9,7 @@ const AcceptTutor = () => {
     const fetchAcceptedTutors = async () => {
       try {
         const response = await fetch(
-          "http://localhost/redox.php"
+          "https://sirajummonir.wuaze.com/redox.php"
         );
 
         if (!response.ok) {
