@@ -6,26 +6,26 @@ const AcceptTutor = () => {
   const [error, setError] = useState(null);
 
     useEffect(() => {
-    const fetchAcceptedTutors = async () => {
-  try {
-    const response = await fetch("/api/redoxproxy");
-    const data = await response.json();
+  const fetchAcceptedTutors = async () => {
+    try {
+      const response = await fetch("/api/redoxproxy");
+      const data = await response.json();
 
-    if (!Array.isArray(data)) {
-      throw new Error(data.error || "API did not return an array");
+      if (!Array.isArray(data)) {
+        throw new Error(data.error || "API did not return an array");
+      }
+
+      setAcceptedTutors(data);
+    } catch (err) {
+      console.error("Error fetching accepted tutor information:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
-    setAcceptedTutors(data);
-  } catch (err) {
-    console.error("Error fetching accepted tutor information:", err);
-    setError(err.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
-    fetchAcceptedTutors();
-  }, []);
+  fetchAcceptedTutors();
+}, []);
 
   if (loading) {
     return <p style={{ color: "#fff" }}>Loading tutors...</p>;
