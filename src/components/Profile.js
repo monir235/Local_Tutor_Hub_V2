@@ -1,40 +1,47 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const Profile = ({ onPageChange }) => {
-  const [userData, setUserData] = useState({
-    name: 'Sirajum Monir',
-    id: '21701005',
-    location: 'chandgaon, chittagong',
-    paymentStatus: 'paid',
-    paymentOption: '',
-    profilePicture: localStorage.getItem('profilePicture') || '',
-    workingAt: '',
-    status: ''
-  });
+const Profile = () => {
+  const [profilePic, setProfilePic] = useState('');
 
+  // Fetch current profile picture on load
   useEffect(() => {
-    const fetchUserData = async () => {
-      const userDataFromBackend = {
-        name: 'Sirajum Monir',
-        id: '21701005',
-        location: 'Chandgaon, Chittagong',
-        paymentStatus: 'paid',
-        paymentOption: '',
-        workingAt: 'University of Chittagong',
-        status: 'Admin'
-      };
-      setUserData(userDataFromBackend);
-    };
-
-    fetchUserData();
+    axios.get('https://sirajum.alwaysdata.net/localtutorhub/get_Profile.php')
+      .then(res => {
+        if (res.data.image_url) {
+          setProfilePic(res.data.image_url.startsWith('http') 
+            ? res.data.image_url 
+            : 'https://sirajum.alwaysdata.net/localtutorhub/' + res.data.image_url);
+        }
+      })
+      .catch(err => console.error(err));
   }, []);
 
-  const handleChange = (field, value) => {
-    setUserData({ ...userData, [field]: value });
-  };
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-  const handleLogout = () => {
-    onPageChange('TutorLogin');
+    const formData = new FormData();
+    formData.append('profilePicture', file);
+
+    try {
+      const res = await axios.post(
+        'https://sirajum.alwaysdata.net/localtutorhub/updateProfile.php',
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+
+      if (res.data.status === 'success') {
+        setProfilePic(res.data.profile.image_url.startsWith('http') 
+          ? res.data.profile.image_url 
+          : 'https://sirajum.alwaysdata.net/localtutorhub/' + res.data.profile.image_url);
+        alert('Profile picture updated!');
+      } else {
+        alert('Error updating profile picture');
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -43,41 +50,35 @@ const Profile = ({ onPageChange }) => {
         <h2 style={styles.header}>Profile</h2>
         <div style={styles.profilePicContainer}>
           <img 
-            src={process.env.PUBLIC_URL + '/Monir.jpg'} 
+            src={profilePic || process.env.PUBLIC_URL + '/Monir.jpg'} 
             alt="Profile" 
             style={styles.profilePic} 
           />
         </div>
+        <input type="file" onChange={handleFileChange} style={{ marginBottom: '20px' }} />
 
         <div style={styles.info}>
           <label>Name:</label>
-          <input type="text" value={userData.name} onChange={(e) => handleChange('name', e.target.value)} style={styles.input} />
+          <input type="text" value="Sirajum Monir" readOnly style={styles.input} />
 
           <label>ID:</label>
-          <input type="text" value={userData.id} readOnly style={styles.input} />
+          <input type="text" value="21701005" readOnly style={styles.input} />
 
           <label>Location:</label>
-          <input type="text" value={userData.location} onChange={(e) => handleChange('location', e.target.value)} style={styles.input} />
+          <input type="text" value="Chandgaon, Chittagong" readOnly style={styles.input} />
 
           <label>Payment Status:</label>
-          <input type="text" value={userData.paymentStatus} readOnly style={styles.input} />
+          <input type="text" value="Paid" readOnly style={styles.input} />
 
           <label>Payment Option:</label>
-          <select value={userData.paymentOption} onChange={(e) => handleChange('paymentOption', e.target.value)} style={styles.input}>
-            <option value="">Select an option</option>
-            <option value="Bikash">Bikash</option>
-            <option value="Nagad">Nagad</option>
-            <option value="Rocket">Rocket</option>
-          </select>
+          <input type="text" value="" readOnly style={styles.input} />
 
           <label>Working At:</label>
-          <input type="text" value={userData.workingAt} onChange={(e) => handleChange('workingAt', e.target.value)} style={styles.input} />
+          <input type="text" value="University of Chittagong" readOnly style={styles.input} />
 
           <label>Status:</label>
-          <input type="text" value={userData.status} onChange={(e) => handleChange('status', e.target.value)} style={styles.input} />
+          <input type="text" value="Admin" readOnly style={styles.input} />
         </div>
-
-        <button onClick={handleLogout} style={styles.button}>Logouts</button>
       </div>
     </div>
   );
@@ -94,7 +95,7 @@ const styles = {
     padding: '20px'
   },
   card: {
-    width: '600px',  // Increased width for better visibility
+    width: '600px',
     background: 'rgba(255, 255, 255, 0.1)',
     backdropFilter: 'blur(15px)',
     borderRadius: '20px',
@@ -103,47 +104,11 @@ const styles = {
     color: '#fff',
     textAlign: 'center'
   },
-  header: {
-    marginBottom: '25px',
-    fontSize: '2rem'
-  },
-  profilePicContainer: {
-    marginBottom: '25px'
-  },
-  profilePic: {
-    width: '160px',
-    height: '160px',
-    borderRadius: '50%',
-    objectFit: 'cover',
-    border: '3px solid #fff'
-  },
-  info: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '18px',
-    marginBottom: '25px'
-  },
-  input: {
-    padding: '12px',
-    borderRadius: '12px',
-    border: 'none',
-    outline: 'none',
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    color: '#fff',
-    fontSize: '1.1rem',
-    width: '100%'
-  },
-  button: {
-    padding: '14px 30px',
-    borderRadius: '12px',
-    border: 'none',
-    cursor: 'pointer',
-    background: 'linear-gradient(90deg, #ff512f, #dd2476)',
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: '1.1rem',
-    transition: 'all 0.3s',
-  }
+  header: { marginBottom: '25px', fontSize: '2rem' },
+  profilePicContainer: { marginBottom: '25px' },
+  profilePic: { width: '160px', height: '160px', borderRadius: '50%', objectFit: 'cover', border: '3px solid #fff' },
+  info: { display: 'flex', flexDirection: 'column', gap: '18px', marginBottom: '25px' },
+  input: { padding: '12px', borderRadius: '12px', border: 'none', outline: 'none', backgroundColor: 'rgba(255,255,255,0.2)', color: '#fff', fontSize: '1.1rem', width: '100%' }
 };
 
 export default Profile;
