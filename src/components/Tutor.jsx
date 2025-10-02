@@ -44,7 +44,7 @@ const TutorForm = ({ onPageChange }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://sirajummonir.wuaze.com/tutor.php', {
+      const response = await fetch('https://sirajum.alwaysdata.net/localtutorhub/tutor.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
