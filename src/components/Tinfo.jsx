@@ -6,7 +6,7 @@ const Tinfo = () => {
 
   // Fetch tutor data from PHP backend
   useEffect(() => {
-    fetch('https://sirajummonir.wuaze.com/tinformation.php')
+    fetch('https://sirajum.alwaysdata.net/localtutorhub/tinformation.php')
       .then(res => res.json())
       .then(data => {
         const mappedData = data.map((item, index) => ({
