@@ -21,7 +21,7 @@ const SignInWithEmail = () => {
       // Send data as JSON
       const response = await axios({
         method: 'post',
-        url: "https://sirajummonir.wuaze.com/prof.php",
+        url: "https://sirajum.alwaysdata.net/localtutorhub/prof.php",
         headers: {
           "Content-Type": "application/json"
         },

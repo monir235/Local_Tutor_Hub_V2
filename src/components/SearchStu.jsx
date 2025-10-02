@@ -9,7 +9,7 @@ const SearchStu = () => {
     const fetchStudentData = async () => {
       try {
         const response = await fetch(
-          `https://sirajummonir.wuaze.com/searchstu.php?location=${encodeURIComponent(searchQuery)}`
+          `https://sirajum.alwaysdata.net/localtutorhub/searchstu.php?location=${encodeURIComponent(searchQuery)}`
         );
         if (response.ok) {
           const data = await response.json();

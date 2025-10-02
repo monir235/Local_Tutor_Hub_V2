@@ -44,7 +44,7 @@ const Tinfo = () => {
 
     if (acceptedTutor) {
       try {
-        const response = await fetch('https://sirajummonir.wuaze.com/info.php', {
+        const response = await fetch('https://sirajum.alwaysdata.net/localtutorhub/info.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

@@ -1,6 +1,6 @@
 export default async function handler(req, res) {
   try {
-    const response = await fetch("https://sirajummonir.wuaze.com/tutorprofile.php", {
+    const response = await fetch("https://sirajum.alwaysdata.net/localtutorhub/tutorprofile.php", {
       method: req.method,
       headers: {
         "Content-Type": "application/json",

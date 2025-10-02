@@ -18,7 +18,7 @@ const TutorForm = ({ onPageChange }) => {
   useEffect(() => {
     const fetchLatestProfile = async () => {
       try {
-        const res = await fetch("https://sirajummonir.wuaze.com/getlatestprofile.php");
+        const res = await fetch("https://sirajum.alwaysdata.net/localtutorhub/getlatestprofile.php");
         const data = await res.json();
         setFormData(prev => ({
           ...prev,

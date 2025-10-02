@@ -6,7 +6,7 @@ const StuLogin = ({ onPageChange }) => {
 
   const handleLogin = () => {
     // You can still send login info to backend if you want, but navigation happens regardless
-    fetch('https://sirajummonir.wuaze.com/studentprofile.php', {
+    fetch('https://sirajum.alwaysdata.net/localtutorhub/studentprofile.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),

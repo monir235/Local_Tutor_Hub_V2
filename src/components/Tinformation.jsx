@@ -6,7 +6,7 @@ const Tinformation = () => {
   useEffect(() => {
     const fetchTutorData = async () => {
       try {
-        const response = await fetch('http://localhost/tinformation.php');
+        const response = await fetch('https://sirajum.alwaysdata.net/localtutorhub/tinformation.php');
         if (response.ok) {
           const data = await response.json();
           setTutors(data); // Assuming the response is an array of tutor objects with the specified attributes
