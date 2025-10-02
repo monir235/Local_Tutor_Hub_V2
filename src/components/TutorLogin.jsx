@@ -10,7 +10,7 @@ const TutorLogin = ({ onPageChange }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('/api/tutorprofile', {
+      const response = await fetch('https://sirajum.alwaysdata.net/localtutorhub/tutorprofile.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
