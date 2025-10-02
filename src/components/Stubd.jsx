@@ -6,7 +6,7 @@ const Stubd = () => {
   const [acceptedId, setAcceptedId] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost/student.php")
+    fetch("https://sirajum.alwaysdata.net/localtutorhub/student.php")
       .then((res) => res.json())
       .then((data) => {
         const mappedData = data.map((item, index) => ({
