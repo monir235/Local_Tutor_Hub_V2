@@ -8,7 +8,7 @@ const AcceptTutor = () => {
   useEffect(() => {
     const fetchAcceptedTutors = async () => {
       try {
-        const response = await fetch("/api/redoxproxy");
+        const response = await fetch("https://sirajum.alwaysdata.net/localtutorhub/redox.php");
         const data = await response.json();
 
         if (!Array.isArray(data)) {
