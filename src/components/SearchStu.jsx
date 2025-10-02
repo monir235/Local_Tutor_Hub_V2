@@ -71,25 +71,33 @@ const SearchStu = () => {
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
           background: linear-gradient(135deg, #6a11cb, #2575fc);
           color: #fff;
+          box-sizing: border-box;
         }
         h1 {
           font-size: 2.5rem;
           margin-bottom: 40px;
           font-weight: 700;
           text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+          text-align: center;
         }
         .search {
           display: flex;
+          flex-wrap: wrap;
           gap: 10px;
           margin-bottom: 40px;
+          justify-content: center;
+          width: 100%;
+          max-width: 600px;
         }
         .search input {
           padding: 12px 15px;
           border-radius: 10px;
           border: none;
           outline: none;
-          width: 300px;
+          width: 100%;
+          max-width: 400px;
           font-size: 1rem;
+          box-sizing: border-box;
         }
         .search button {
           padding: 12px 20px;
@@ -100,6 +108,7 @@ const SearchStu = () => {
           font-weight: 600;
           cursor: pointer;
           transition: transform 0.3s, background 0.3s;
+          flex-shrink: 0;
         }
         .search button:hover {
           background: #feb47b;
@@ -110,9 +119,11 @@ const SearchStu = () => {
           flex-wrap: wrap;
           justify-content: center;
           gap: 25px;
+          width: 100%;
         }
         .card {
-          width: 300px;
+          width: 100%;
+          max-width: 300px;
           border-radius: 20px;
           padding: 25px;
           background: #ffffff;
