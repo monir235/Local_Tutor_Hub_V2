@@ -202,7 +202,7 @@ function useCountUp(target, duration = 1500) {
     onMouseEnter={() => setHoveredStats('teachers')}
     onMouseLeave={() => setHoveredStats('')}
   >
-    <p style={{ fontSize: '2em', fontWeight: 'bold' }}>  <h3>Total Happy Teachers</h3>
+    <p style={{ fontSize: '1.5em', fontWeight: 'bold' }}>  <h3>Total Happy Teachers</h3>
   {useCountUp(totalTeachers)}
 </p>
 
@@ -214,7 +214,7 @@ function useCountUp(target, duration = 1500) {
     onMouseEnter={() => setHoveredStats('students')}
     onMouseLeave={() => setHoveredStats('')}
   >
-   <p style={{ fontSize: '2em', fontWeight: 'bold' }}> <h3>Total Happy Students</h3>
+   <p style={{ fontSize: '1.5em', fontWeight: 'bold' }}> <h3>Total Happy Students</h3>
   {useCountUp(totalStudents)}
 </p>
 
