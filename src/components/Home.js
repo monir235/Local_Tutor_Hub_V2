@@ -1,28 +1,107 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { FaFacebook, FaTwitter, FaInstagram, FaGithub, FaUniversity } from 'react-icons/fa';
 
 function Home() {
   const [hoveredCard, setHoveredCard] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [totalTeachers, setTotalTeachers] = useState(0);
+  const [totalStudents, setTotalStudents] = useState(0);
+  const [hoveredStats, setHoveredStats] = useState('');
+
+
+function useCountUp(target, duration = 1500) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const step = Math.ceil(target / (duration / 16)); // ~60fps
+    const interval = setInterval(() => {
+      start += step;
+      if (start >= target) {
+        clearInterval(interval);
+        setCount(target);
+      } else {
+        setCount(start);
+      }
+    }, 16);
+
+    return () => clearInterval(interval);
+  }, [target, duration]);
+
+  return count;
+}  
+
+   useEffect(() => {
+    fetch("https://sirajum.alwaysdata.net/localtutorhub/getSDashboardstats.php")
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          setTotalTeachers(data.totalTeachers);
+          setTotalStudents(data.totalStudents);
+        }
+      })
+      .catch(err => console.error("Error fetching stats:", err));
+  }, []);
+  
+
+ const glassCardStyle = {
+  width: '330px',
+  margin: '15px',
+  padding: '30px',
+  textAlign: 'center',
+  borderRadius: '25px',
+  background: 'rgba(255, 255, 255, 0.12)',
+  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)',
+  backdropFilter: 'blur(16px) saturate(180%)',
+  WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+  border: '1px solid rgba(255, 255, 255, 0.3)',
+  color: '#1e3a8a',
+  fontWeight: '700',
+  fontSize: '1.2em',
+  transition: 'all 0.35s ease',
+  transform: 'translateY(0px) scale(1)',
+};
+
+
+ const statsCardStyle = (cardName) => ({
+  ...glassCardStyle,
+  cursor: 'pointer',
+  transform: hoveredStats === cardName ? 'translateY(-10px) scale(1.05)' : 'translateY(0) scale(1)',
+  background: hoveredStats === cardName
+    ? 'linear-gradient(135deg, #60a5fa, #1e3a8a)'  // light → dark blue on hover
+    : 'linear-gradient(135deg, #bfdbfe, #93c5fd)', // light blue default
+  color: hoveredStats === cardName ? '#ffffff' : '#1e3a8a', // font color change
+  boxShadow: hoveredStats === cardName
+    ? '0 15px 40px rgba(0,0,0,0.3)'
+    : '0 8px 20px rgba(0,0,0,0.15)',
+  border: hoveredStats === cardName
+    ? '1px solid rgba(255, 255, 255, 0.5)'
+    : '1px solid rgba(255, 255, 255, 0.3)',
+  transition: 'all 0.4s ease-in-out',
+});
+
+
+
 
   const cardStyle = (cardName) => ({
-    width: '330px',
-    margin: '15px',
-    textAlign: 'center',
-    background: hoveredCard === cardName
-      ? 'linear-gradient(135deg, #3b82f6, #60a5fa)'
-      : 'linear-gradient(135deg, #93c5fd, #bfdbfe)',
-    color: '#1e3a8a',
-    cursor: 'pointer',
-    borderRadius: '20px',
-    transition: 'all 0.3s ease',
-    overflow: 'hidden',
-    transform: hoveredCard === cardName ? 'scale(1.05)' : 'scale(1)',
-    boxShadow: hoveredCard === cardName
-      ? '0 12px 25px rgba(0,0,0,0.25)'
-      : '0 6px 15px rgba(0,0,0,0.1)',
-  });
+  width: '330px',
+  margin: '15px',
+  textAlign: 'center',
+  background: hoveredCard === cardName
+    ? 'linear-gradient(135deg, #2563eb, #3b82f6)'  // dark → light blue
+    : 'linear-gradient(135deg, #93c5fd, #bfdbfe)', // soft blue
+  color: '#1e3a8a',
+  cursor: 'pointer',
+  borderRadius: '20px',
+  transition: 'all 0.4s ease-in-out',
+  overflow: 'hidden',
+  transform: hoveredCard === cardName ? 'scale(1.05)' : 'scale(1)',
+  boxShadow: hoveredCard === cardName
+    ? '0 12px 25px rgba(0,0,0,0.25)'
+    : '0 6px 15px rgba(0,0,0,0.1)',
+});
 
   const imageStyle = {
     width: '100%',
@@ -113,6 +192,35 @@ function Home() {
             <div key={index} style={{ marginBottom: '8px' }}>{name}</div>
           ))}
         </div>
+      </div>
+
+
+      {/* Stats Section */}      <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginTop: '40px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginTop: '40px' }}>
+  <div
+    style={statsCardStyle('teachers')}
+    onMouseEnter={() => setHoveredStats('teachers')}
+    onMouseLeave={() => setHoveredStats('')}
+  >
+    <p style={{ fontSize: '2em', fontWeight: 'bold' }}>  <h3>Total Happy Teachers</h3>
+  {useCountUp(totalTeachers)}
+</p>
+
+
+  </div>
+
+  <div
+    style={statsCardStyle('students')}
+    onMouseEnter={() => setHoveredStats('students')}
+    onMouseLeave={() => setHoveredStats('')}
+  >
+   <p style={{ fontSize: '2em', fontWeight: 'bold' }}> <h3>Total Happy Students</h3>
+  {useCountUp(totalStudents)}
+</p>
+
+
+  </div>
+</div>
       </div>
 
       {/* Search Tutor */}
