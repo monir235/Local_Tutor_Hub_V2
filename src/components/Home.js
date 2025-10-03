@@ -62,6 +62,10 @@ function useCountUp(target, duration = 1500) {
   fontSize: '1.2em',
   transition: 'all 0.35s ease',
   transform: 'translateY(0px) scale(1)',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 
