@@ -119,7 +119,7 @@ function App() {
         style={{
           position: "fixed",
           top: "15px",
-          right: "15px",
+          right: "40px",
           zIndex: 1100,
           background: "linear-gradient(135deg, #4f46e5, #3b82f6)",
           border: "none",
