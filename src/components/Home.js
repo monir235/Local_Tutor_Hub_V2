@@ -128,11 +128,7 @@ function Home() {
   const assignTeacherListData = ["1. Sabbir Hossain", "2. Rakib Islam", "3. Sadman Hasan"];
   const studentListData = ["1. Mohaimin", "2. Nishad", "3. Omin Gupta"];
 
-  const tutorInfoData = [
-    { name: 'Sirajum Monir', email: 'monir@gmail.com', contact_number: '1234567890', address: 'Chittagong', university: 'CU', department: 'CSE', semester: '3' },
-    { name: 'Raiqul Islam', email: 'raiqul@gmail.com', contact_number: '9876543210', address: 'Chittagong', university: 'CU', department: 'CSE', semester: '4' },
-    { name: 'Rishad Hossain', email: 'rishad@gmail.com', contact_number: '4567890123', address: 'Chittagong', university: 'CU', department: 'CSE', semester: '5' }
-  ];
+  
 
   
 
