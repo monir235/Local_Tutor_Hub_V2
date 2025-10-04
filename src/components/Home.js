@@ -135,19 +135,7 @@ function Home() {
     { name: 'Rishad Hossain', email: 'rishad@gmail.com', contact_number: '4567890123', address: 'Chittagong', university: 'CU', department: 'CSE', semester: '5' }
   ];
 
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-
-    if (value) {
-      const filteredResults = tutorInfoData.filter((tutor) =>
-        tutor.name.toLowerCase().includes(value.toLowerCase())
-      );
-      setSearchResults(filteredResults);
-    } else {
-      setSearchResults([]);
-    }
-  };
+  
 
   return (
     <div
@@ -227,24 +215,7 @@ function Home() {
       </div>
 
       {/* Search Tutor */}
-      <div style={{ textAlign: 'center', marginTop: '50px' }}>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="🔍 Search for tutors..."
-          style={{
-            padding: '14px 20px',
-            borderRadius: '35px',
-            border: '1px solid #d1d5db',
-            width: '320px',
-            boxShadow: '0 6px 15px rgba(0,0,0,0.15)',
-            fontSize: '1em',
-            outline: 'none',
-            transition: 'all 0.3s ease',
-          }}
-        />
-      </div>
+      
 
       {/* Tutor Info */}
       {searchResults.length > 0 && (
