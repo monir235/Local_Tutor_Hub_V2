@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaFacebook, FaTwitter, FaInstagram, FaGithub, FaUniversity } from 'react-icons/fa';
 
 function Home() {
@@ -10,30 +9,32 @@ function Home() {
   const [totalStudents, setTotalStudents] = useState(0);
   const [hoveredStats, setHoveredStats] = useState('');
 
+  // Ref for stats section
+  const statsRef = useRef(null);
 
-function useCountUp(target, duration = 1500) {
-  const [count, setCount] = useState(0);
+  function useCountUp(target, duration = 3000) {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+      let start = 0;
+      const step = Math.ceil(target / (duration / 16)); // ~60fps
+      const interval = setInterval(() => {
+        start += step;
+        if (start >= target) {
+          clearInterval(interval);
+          setCount(target);
+        } else {
+          setCount(start);
+        }
+      }, 16);
+
+      return () => clearInterval(interval);
+    }, [target, duration]);
+
+    return count;
+  }  
 
   useEffect(() => {
-    let start = 0;
-    const step = Math.ceil(target / (duration / 16)); // ~60fps
-    const interval = setInterval(() => {
-      start += step;
-      if (start >= target) {
-        clearInterval(interval);
-        setCount(target);
-      } else {
-        setCount(start);
-      }
-    }, 16);
-
-    return () => clearInterval(interval);
-  }, [target, duration]);
-
-  return count;
-}  
-
-   useEffect(() => {
     fetch("https://sirajum.alwaysdata.net/localtutorhub/getSDashboardstats.php")
       .then(res => res.json())
       .then(data => {
@@ -44,68 +45,70 @@ function useCountUp(target, duration = 1500) {
       })
       .catch(err => console.error("Error fetching stats:", err));
   }, []);
-  
 
- const glassCardStyle = {
-  width: '330px',
-  margin: '15px',
-  padding: '30px',
-  textAlign: 'center',
-  borderRadius: '25px',
-  background: 'rgba(255, 255, 255, 0.12)',
-  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)',
-  backdropFilter: 'blur(16px) saturate(180%)',
-  WebkitBackdropFilter: 'blur(16px) saturate(180%)',
-  border: '1px solid rgba(255, 255, 255, 0.3)',
-  color: '#1e3a8a',
-  fontWeight: '700',
-  fontSize: '1.2em',
-  transition: 'all 0.35s ease',
-  transform: 'translateY(0px) scale(1)',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'center',
-};
+  // Scroll to stats on landing
+  useEffect(() => {
+    if (statsRef.current) {
+      statsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
 
+  const glassCardStyle = {
+    width: '250px',
+    margin: '15px',
+    padding: '30px',
+    textAlign: 'center',
+    borderRadius: '25px',
+    background: 'rgba(255, 255, 255, 0.12)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.25)',
+    backdropFilter: 'blur(16px) saturate(180%)',
+    WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    color: '#1e3a8a',
+    fontWeight: '700',
+    fontSize: '1.2em',
+    transition: 'all 0.35s ease',
+    transform: 'translateY(0px) scale(1)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
 
- const statsCardStyle = (cardName) => ({
-  ...glassCardStyle,
-  cursor: 'pointer',
-  transform: hoveredStats === cardName ? 'translateY(-10px) scale(1.05)' : 'translateY(0) scale(1)',
-  background: hoveredStats === cardName
-    ? 'linear-gradient(135deg, #60a5fa, #1e3a8a)'  // light → dark blue on hover
-    : 'linear-gradient(135deg, #bfdbfe, #93c5fd)', // light blue default
-  color: hoveredStats === cardName ? '#ffffff' : '#1e3a8a', // font color change
-  boxShadow: hoveredStats === cardName
-    ? '0 15px 40px rgba(0,0,0,0.3)'
-    : '0 8px 20px rgba(0,0,0,0.15)',
-  border: hoveredStats === cardName
-    ? '1px solid rgba(255, 255, 255, 0.5)'
-    : '1px solid rgba(255, 255, 255, 0.3)',
-  transition: 'all 0.4s ease-in-out',
-});
-
-
-
+  const statsCardStyle = (cardName) => ({
+    ...glassCardStyle,
+    cursor: 'pointer',
+    transform: hoveredStats === cardName ? 'translateY(-10px) scale(1.05)' : 'translateY(0) scale(1)',
+    background: hoveredStats === cardName
+      ? 'linear-gradient(135deg, #60a5fa, #1e3a8a)'  
+      : 'linear-gradient(135deg, #bfdbfe, #93c5fd)', 
+    color: hoveredStats === cardName ? '#ffffff' : '#1e3a8a', 
+    boxShadow: hoveredStats === cardName
+      ? '0 15px 40px rgba(0,0,0,0.3)'
+      : '0 8px 20px rgba(0,0,0,0.15)',
+    border: hoveredStats === cardName
+      ? '1px solid rgba(255, 255, 255, 0.5)'
+      : '1px solid rgba(255, 255, 255, 0.3)',
+    transition: 'all 0.4s ease-in-out',
+  });
 
   const cardStyle = (cardName) => ({
-  width: '330px',
-  margin: '15px',
-  textAlign: 'center',
-  background: hoveredCard === cardName
-    ? 'linear-gradient(135deg, #2563eb, #3b82f6)'  // dark → light blue
-    : 'linear-gradient(135deg, #93c5fd, #bfdbfe)', // soft blue
-  color: '#1e3a8a',
-  cursor: 'pointer',
-  borderRadius: '20px',
-  transition: 'all 0.4s ease-in-out',
-  overflow: 'hidden',
-  transform: hoveredCard === cardName ? 'scale(1.05)' : 'scale(1)',
-  boxShadow: hoveredCard === cardName
-    ? '0 12px 25px rgba(0,0,0,0.25)'
-    : '0 6px 15px rgba(0,0,0,0.1)',
-});
+    width: '330px',
+    margin: '15px',
+    textAlign: 'center',
+    background: hoveredCard === cardName
+      ? 'linear-gradient(135deg, #2563eb, #3b82f6)'
+      : 'linear-gradient(135deg, #93c5fd, #bfdbfe)',
+    color: '#1e3a8a',
+    cursor: 'pointer',
+    borderRadius: '20px',
+    transition: 'all 0.4s ease-in-out',
+    overflow: 'hidden',
+    transform: hoveredCard === cardName ? 'scale(1.05)' : 'scale(1)',
+    boxShadow: hoveredCard === cardName
+      ? '0 12px 25px rgba(0,0,0,0.25)'
+      : '0 6px 15px rgba(0,0,0,0.1)',
+  });
 
   const imageStyle = {
     width: '100%',
@@ -198,33 +201,29 @@ function useCountUp(target, duration = 1500) {
         </div>
       </div>
 
+      {/* Stats Section */}
+      <div ref={statsRef} style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginTop: '40px' }}>
+        <div
+          style={statsCardStyle('teachers')}
+          onMouseEnter={() => setHoveredStats('teachers')}
+          onMouseLeave={() => setHoveredStats('')}
+        >
+          <p style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
+            <h3>Total Happy Teachers</h3>
+            {useCountUp(totalTeachers)}
+          </p>
+        </div>
 
-      {/* Stats Section */}      <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginTop: '40px' }}>
-        <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', marginTop: '40px' }}>
-  <div
-    style={statsCardStyle('teachers')}
-    onMouseEnter={() => setHoveredStats('teachers')}
-    onMouseLeave={() => setHoveredStats('')}
-  >
-    <p style={{ fontSize: '1.5em', fontWeight: 'bold' }}>  <h3>Total Happy Teachers</h3>
-  {useCountUp(totalTeachers)}
-</p>
-
-
-  </div>
-
-  <div
-    style={statsCardStyle('students')}
-    onMouseEnter={() => setHoveredStats('students')}
-    onMouseLeave={() => setHoveredStats('')}
-  >
-   <p style={{ fontSize: '1.5em', fontWeight: 'bold' }}> <h3>Total Happy Students</h3>
-  {useCountUp(totalStudents)}
-</p>
-
-
-  </div>
-</div>
+        <div
+          style={statsCardStyle('students')}
+          onMouseEnter={() => setHoveredStats('students')}
+          onMouseLeave={() => setHoveredStats('')}
+        >
+          <p style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
+            <h3>Total Happy Students</h3>
+            {useCountUp(totalStudents)}
+          </p>
+        </div>
       </div>
 
       {/* Search Tutor */}
@@ -282,56 +281,56 @@ function useCountUp(target, duration = 1500) {
         </div>
       )}
 
-     {/* Footer */}
-<div
-  style={{
-    background: 'rgba(30, 58, 138, 0.95)',
-    color: '#ffffff',
-    textAlign: 'center',
-    padding: '20px',
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-    boxShadow: '0 -6px 15px rgba(0,0,0,0.25)',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '10px',
-  }}
->
-  <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
-    <a href="https://www.facebook.com/sirajummonir.monir.5" target="_blank" rel="noopener noreferrer">
-      <FaFacebook style={{ fontSize: '35px', color: '#fff', transition: 'transform 0.3s' }} 
-                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
-    </a>
-    <a href="https://twitter.com/ayon_chayo33456" target="_blank" rel="noopener noreferrer">
-      <FaTwitter style={{ fontSize: '35px', color: '#fff', transition: 'transform 0.3s' }}
-                 onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-                 onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
-    </a>
-    <a href="https://www.instagram.com/monir_chayon/" target="_blank" rel="noopener noreferrer">
-      <FaInstagram style={{ fontSize: '35px', color: '#fff', transition: 'transform 0.3s' }}
-                   onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-                   onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
-    </a>
-    <a href="https://github.com/monir235" target="_blank" rel="noopener noreferrer">
-      <FaGithub style={{ fontSize: '35px', color: '#fff', transition: 'transform 0.3s' }}
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
-    </a>
-    <a href="https://web.cu.ac.bd/v2/" target="_blank" rel="noopener noreferrer">
-      <FaUniversity style={{ fontSize: '35px', color: '#fff', transition: 'transform 0.3s' }}
-                    onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
-                    onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
-    </a>
-  </div>
+      {/* Footer */}
+      <div
+        style={{
+          background: 'rgba(30, 58, 138, 0.95)',
+          color: '#ffffff',
+          textAlign: 'center',
+          padding: '20px',
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          boxShadow: '0 -6px 15px rgba(0,0,0,0.25)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '10px',
+        }}
+      >
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+          <a href="https://www.facebook.com/sirajummonir.monir.5" target="_blank" rel="noopener noreferrer">
+            <FaFacebook style={{ fontSize: '35px', color: '#fff', transition: 'transform 0.3s' }} 
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+          </a>
+          <a href="https://twitter.com/ayon_chayo33456" target="_blank" rel="noopener noreferrer">
+            <FaTwitter style={{ fontSize: '35px', color: '#fff', transition: 'transform 0.3s' }}
+                       onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                       onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+          </a>
+          <a href="https://www.instagram.com/monir_chayon/" target="_blank" rel="noopener noreferrer">
+            <FaInstagram style={{ fontSize: '35px', color: '#fff', transition: 'transform 0.3s' }}
+                         onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                         onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+          </a>
+          <a href="https://github.com/monir235" target="_blank" rel="noopener noreferrer">
+            <FaGithub style={{ fontSize: '35px', color: '#fff', transition: 'transform 0.3s' }}
+                      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                      onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+          </a>
+          <a href="https://web.cu.ac.bd/v2/" target="_blank" rel="noopener noreferrer">
+            <FaUniversity style={{ fontSize: '35px', color: '#fff', transition: 'transform 0.3s' }}
+                          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'}
+                          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+          </a>
+        </div>
 
-  <div style={{ marginTop: '12px', fontWeight: '600', fontSize: '0.9em' }}>
-    © 2024 Sirajum Monir | University of Chittagong
-  </div>
-</div>
+        <div style={{ marginTop: '12px', fontWeight: '600', fontSize: '0.9em' }}>
+          © 2024 Sirajum Monir | University of Chittagong
+        </div>
+      </div>
     </div>
   );
 }
