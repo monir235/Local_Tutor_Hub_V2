@@ -3,7 +3,6 @@ import { FaFacebook, FaTwitter, FaInstagram, FaGithub, FaUniversity } from 'reac
 
 function Home() {
   const [hoveredCard, setHoveredCard] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
   const [totalTeachers, setTotalTeachers] = useState(0);
   const [totalStudents, setTotalStudents] = useState(0);
   const [hoveredStats, setHoveredStats] = useState('');
@@ -117,12 +116,7 @@ function Home() {
     borderTopRightRadius: '20px',
   };
 
-  const tutorInfoCardStyle = {
-    ...cardStyle('tutorInfoCard'),
-    width: '600px',
-    padding: '25px',
-    textAlign: 'left',
-  };
+  
 
   const bookingListData = ["1. Sirajum Monir", "2. Raiqul Islam", "3. Rishad Hossain"];
   const assignTeacherListData = ["1. Sabbir Hossain", "2. Rakib Islam", "3. Sadman Hasan"];
@@ -212,40 +206,7 @@ function Home() {
       {/* Search Tutor */}
       
 
-      {/* Tutor Info */}
-      {searchResults.length > 0 && (
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '30px' }}>
-          <div
-            style={tutorInfoCardStyle}
-            onMouseEnter={() => setHoveredCard('tutorInfoCard')}
-            onMouseLeave={() => setHoveredCard('')}
-          >
-            <h2 style={{ marginBottom: '20px', fontSize: '1.6em', fontWeight: '800', color: '#1e40af' }}>
-              Tutor Information
-            </h2>
-            {searchResults.map((tutor, index) => (
-              <div
-                key={index}
-                style={{
-                  marginBottom: '20px',
-                  padding: '15px 20px',
-                  background: 'rgba(255, 255, 255, 0.9)',
-                  borderRadius: '15px',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                }}
-              >
-                <h3 style={{ marginBottom: '8px', fontSize: '1.2em', color: '#1e3a8a' }}>{tutor.name}</h3>
-                <p>Email: {tutor.email}</p>
-                <p>Contact: {tutor.contact_number}</p>
-                <p>Address: {tutor.address}</p>
-                <p>University: {tutor.university}</p>
-                <p>Department: {tutor.department}</p>
-                <p>Semester: {tutor.semester}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      
 
       {/* Footer */}
       <div
