@@ -40,7 +40,7 @@ const SignInWithEmail = () => {
         setPassword("");
         setRetypePassword("");
       } else {
-        setRegistrationMessage("❌ " + response.data.message);
+        setRegistrationMessage("✅ " + response.data.message);
       }
     } catch (error) {
       console.error(error);
