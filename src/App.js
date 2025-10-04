@@ -8,7 +8,6 @@ import {
   FaUsers,
   FaCheckCircle,
   FaMoneyBill,
-  
   FaUserPlus,
 } from "react-icons/fa";
 
@@ -36,11 +35,11 @@ import MoneyCard from "./components/MoneyCard";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("Admin");
-  const [drawerOpen, setDrawerOpen] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    setDrawerOpen(drawerOpen); // keep drawer state
+    setDrawerOpen(false); // auto-close drawer after selection
   };
 
   const renderPage = () => {
@@ -110,57 +109,58 @@ function App() {
       style={{
         minHeight: "100vh",
         background: "linear-gradient(145deg, #1e3a8a, #2563eb, #60a5fa)",
-        display: "flex",
-        flexDirection: "row",
         fontFamily: "'Inter', sans-serif",
+        position: "relative",
       }}
     >
-      {/* Drawer */}
-      <div
+      {/* Toggle Button */}
+      <button
+        onClick={() => setDrawerOpen(!drawerOpen)}
         style={{
-          width: drawerOpen ? "220px" : "70px",
-          transition: "all 0.3s ease",
-          background: "rgba(255,255,255,0.15)",
-          backdropFilter: "blur(15px)",
-          boxShadow: "4px 0 15px rgba(0,0,0,0.25)",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: drawerOpen ? "flex-start" : "center",
-          padding: "20px 10px",
-          overflow: "hidden",
+          position: "fixed",
+          top: "15px",
+          right: "15px",
+          zIndex: 1100,
+          background: "linear-gradient(135deg, #4f46e5, #3b82f6)",
+          border: "none",
+          color: "#fff",
+          padding: "10px 15px",
+          borderRadius: "8px",
+          cursor: "pointer",
+          fontSize: "20px",
+          fontWeight: "bold",
         }}
       >
-        {/* Toggle Button */}
-        <button
-          onClick={() => setDrawerOpen(!drawerOpen)}
-          style={{
-            background: "linear-gradient(135deg, #4f46e5, #3b82f6)",
-            border: "none",
-            color: "#fff",
-            padding: "10px",
-            borderRadius: "8px",
-            cursor: "pointer",
-            marginBottom: "20px",
-            width: "100%",
-            fontSize: "20px",
-            fontWeight: "bold",
-          }}
-        >
-          {"≡"}
-        </button>
+        {"≡"}
+      </button>
 
-        {/* Navigation Items */}
+      {/* Full Top Drawer */}
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: drawerOpen ? "100%" : "0",
+          transition: "height 0.4s ease",
+          background: "rgba(0,0,0,0.9)",
+          overflow: "hidden",
+          zIndex: 1000,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         {navItems.map(([page, label, icon]) => (
           <button
             key={page}
             onClick={() => handlePageChange(page)}
             style={{
-              padding: "12px 15px",
-              margin: "8px 0",
-              fontSize: "14px",
+              margin: "12px 0",
+              padding: "12px 20px",
+              fontSize: "18px",
               fontWeight: "600",
-              textAlign: drawerOpen ? "left" : "center",
-              width: "100%",
               border: "none",
               borderRadius: "10px",
               cursor: "pointer",
@@ -171,28 +171,17 @@ function App() {
                   : "transparent",
               display: "flex",
               alignItems: "center",
-              justifyContent: drawerOpen ? "flex-start" : "center",
-              gap: drawerOpen ? "12px" : "0",
-              transition: "all 0.3s ease",
+              gap: "12px",
             }}
           >
-            {React.cloneElement(icon, { size: 22, flexShrink: 2 })}
-            {drawerOpen && label}
+            {React.cloneElement(icon, { size: 24 })}
+            {label}
           </button>
         ))}
       </div>
 
-      {/* Main Page Content */}
-      <div
-        style={{
-          flex: 1,
-          padding: "20px",
-          overflowY: "auto",
-          transition: "all 0.3s ease",
-        }}
-      >
-        {renderPage()}
-      </div>
+      {/* Main Content */}
+      <div style={{ flex: 1, padding: "80px 20px" }}>{renderPage()}</div>
     </div>
   );
 }
