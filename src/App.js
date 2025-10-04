@@ -1,170 +1,194 @@
-import React, { useState } from 'react';
-import TeacherLogin from './components/TeacherLogin';
-import Home from './components/Home';
-import Profile from './components/Profile';
-import Search from './components/Search';
-import TutorForm from './components/TutorForm';
-import Student from './components/Student';
-import StudentForm from './components/StudentForm';
-import Tutor from './components/Tutor';
-import StuInfo from './components/StuInfo';
-import SignIn from './components/SignIn';
-import Tinfo from './components/Tinfo';
-import Stubd from './components/Stubd';
-import TutorLogin from './components/TutorLogin';
-import Tinformation from './components/Tinformation';
-import SearchTutor from './components/SearchTutor';
-import SearchStu from './components/SearchStu';
-import StuLogin from './components/StuLogin';
-import StuInformation from './components/StuInformation';
-import AcceptTutor from './components/AcceptTutor';
-import AcceptStu from './components/AcceptStu';
-import MoneyCard from './components/MoneyCard';
+import React, { useState } from "react";
+import {
+  FaHome,
+  FaUser,
+  FaChalkboardTeacher,
+  FaUserGraduate,
+  FaSearch,
+  FaUsers,
+  FaCheckCircle,
+  FaMoneyBill,
+  
+  FaUserPlus,
+} from "react-icons/fa";
+
+import TeacherLogin from "./components/TeacherLogin";
+import Home from "./components/Home";
+import Profile from "./components/Profile";
+import Search from "./components/Search";
+import TutorForm from "./components/TutorForm";
+import Student from "./components/Student";
+import StudentForm from "./components/StudentForm";
+import Tutor from "./components/Tutor";
+import StuInfo from "./components/StuInfo";
+import SignIn from "./components/SignIn";
+import Tinfo from "./components/Tinfo";
+import Stubd from "./components/Stubd";
+import TutorLogin from "./components/TutorLogin";
+import Tinformation from "./components/Tinformation";
+import SearchTutor from "./components/SearchTutor";
+import SearchStu from "./components/SearchStu";
+import StuLogin from "./components/StuLogin";
+import StuInformation from "./components/StuInformation";
+import AcceptTutor from "./components/AcceptTutor";
+import AcceptStu from "./components/AcceptStu";
+import MoneyCard from "./components/MoneyCard";
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('Admin');
+  const [currentPage, setCurrentPage] = useState("Admin");
+  const [drawerOpen, setDrawerOpen] = useState(true);
 
-  const handlePageChange = (page) => setCurrentPage(page);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    setDrawerOpen(drawerOpen); // keep drawer state
+  };
 
   const renderPage = () => {
     switch (currentPage) {
-      case 'Admin':
+      case "Admin":
         return <Home />;
-      case 'TeacherLogin':
+      case "TeacherLogin":
         return <TeacherLogin />;
-      case 'Profile':
+      case "Profile":
         return <Profile onPageChange={handlePageChange} />;
-      case 'Search':
+      case "Search":
         return <Search />;
-      case 'TutorForm':
+      case "TutorForm":
         return <TutorForm />;
-      case 'Student':
+      case "Student":
         return <Student />;
-      case 'StudentForm':
+      case "StudentForm":
         return <StudentForm />;
-      case 'Tinformation':
+      case "Tinformation":
         return <Tinformation />;
-      case 'Tutor':
+      case "Tutor":
         return <Tutor onPageChange={handlePageChange} />;
-      case 'StuInformation':
+      case "StuInformation":
         return <StuInformation />;
-      case 'StuInfo':
+      case "StuInfo":
         return <StuInfo onPageChange={handlePageChange} />;
-      case 'Tinfo':
+      case "Tinfo":
         return <Tinfo />;
-      case 'SignIno':
+      case "SignIno":
         return <SignIn />;
-      case 'Stubd':
+      case "Stubd":
         return <Stubd />;
-      case 'tutorlogin':
+      case "tutorlogin":
         return <TutorLogin onPageChange={handlePageChange} />;
-      case 'searchtutor':
+      case "searchtutor":
         return <SearchTutor />;
-      case 'searchstu':
+      case "searchstu":
         return <SearchStu />;
-      case 'stulogin':
+      case "stulogin":
         return <StuLogin onPageChange={handlePageChange} />;
-      case 'redox':
+      case "redox":
         return <AcceptTutor />;
-      case 'redol':
+      case "redol":
         return <AcceptStu />;
-      case 'crut':
+      case "crut":
         return <MoneyCard />;
       default:
         return <Home />;
     }
   };
 
-  // Modern nav button style
-  const navButtonStyle = {
-    padding: '12px 20px',
-    fontSize: '15px',
-    fontWeight: '600',
-    color: '#fff',
-    background: 'linear-gradient(135deg, #4f46e5, #3b82f6)',
-    border: 'none',
-    borderRadius: '12px',
-    cursor: 'pointer',
-    margin: '6px',
-    transition: 'all 0.4s ease',
-    boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
-  };
-
-  const navButtonHover = {
-    transform: 'translateY(-3px)',
-    boxShadow: '0 12px 24px rgba(0,0,0,0.35)',
-    background: 'linear-gradient(135deg, #3b82f6, #4f46e5)',
-  };
+  const navItems = [
+    ["Admin", "Home", <FaHome />],
+    ["SignIno", "Register", <FaUserPlus />],
+    ["tutorlogin", "Tutor Login", <FaChalkboardTeacher />],
+    ["stulogin", "Student Login", <FaUserGraduate />],
+    ["Profile", "Profile", <FaUser />],
+    ["searchtutor", "Available Tutor", <FaSearch />],
+    ["searchstu", "Available Student", <FaUsers />],
+    ["redox", "Accepted Tutor", <FaCheckCircle />],
+    ["redol", "Accepted Student", <FaCheckCircle />],
+    ["crut", "Collection", <FaMoneyBill />],
+  ];
 
   return (
     <div
-      className="App"
       style={{
-        minHeight: '100vh',
-        background: 'linear-gradient(145deg, #1e3a8a, #2563eb, #60a5fa)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '20px',
+        minHeight: "100vh",
+        background: "linear-gradient(145deg, #1e3a8a, #2563eb, #60a5fa)",
+        display: "flex",
+        flexDirection: "row",
         fontFamily: "'Inter', sans-serif",
       }}
     >
-      {/* Navigation */}
-      {currentPage !== 'Login' && (
-        <div
+      {/* Drawer */}
+      <div
+        style={{
+          width: drawerOpen ? "220px" : "70px",
+          transition: "all 0.3s ease",
+          background: "rgba(255,255,255,0.15)",
+          backdropFilter: "blur(15px)",
+          boxShadow: "4px 0 15px rgba(0,0,0,0.25)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: drawerOpen ? "flex-start" : "center",
+          padding: "20px 10px",
+          overflow: "hidden",
+        }}
+      >
+        {/* Toggle Button */}
+        <button
+          onClick={() => setDrawerOpen(!drawerOpen)}
           style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '12px',
-            padding: '20px',
-            margin: '20px auto',
-            background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(15px)',
-            borderRadius: '25px',
-            boxShadow: '0 12px 36px rgba(0,0,0,0.25)',
-            maxWidth: '1000px',
-            width: '90%',
-            transition: 'all 0.3s ease',
+            background: "linear-gradient(135deg, #4f46e5, #3b82f6)",
+            border: "none",
+            color: "#fff",
+            padding: "10px",
+            borderRadius: "8px",
+            cursor: "pointer",
+            marginBottom: "20px",
+            width: "100%",
+            fontSize: "20px",
+            fontWeight: "bold",
           }}
         >
-          {[
-            ['Admin', 'Home'],
-            ['SignIno', 'Register'],
-            ['tutorlogin', 'Tutor Login'],
-            ['stulogin', 'Student Login'],
-            ['Profile', 'Profile'],
-            ['searchtutor', 'Available Tutor'],
-            ['searchstu', 'Available Student'],
-            ['redox', 'Accepted Tutor'],
-            ['redol', 'Accepted Student'],
-            ['crut', 'Collection'],
-          ].map(([page, label]) => (
-            <button
-              key={page}
-              onClick={() => setCurrentPage(page)}
-              style={navButtonStyle}
-              onMouseEnter={(e) =>
-                Object.assign(e.target.style, navButtonHover)
-              }
-              onMouseLeave={(e) =>
-                Object.assign(e.target.style, navButtonStyle)
-              }
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      )}
+          {"≡"}
+        </button>
 
-      {/* Page Content */}
+        {/* Navigation Items */}
+        {navItems.map(([page, label, icon]) => (
+          <button
+            key={page}
+            onClick={() => handlePageChange(page)}
+            style={{
+              padding: "12px 15px",
+              margin: "8px 0",
+              fontSize: "14px",
+              fontWeight: "600",
+              textAlign: drawerOpen ? "left" : "center",
+              width: "100%",
+              border: "none",
+              borderRadius: "10px",
+              cursor: "pointer",
+              color: "#fff",
+              background:
+                currentPage === page
+                  ? "linear-gradient(135deg, #3b82f6, #4f46e5)"
+                  : "transparent",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: drawerOpen ? "flex-start" : "center",
+              gap: drawerOpen ? "12px" : "0",
+              transition: "all 0.3s ease",
+            }}
+          >
+            {React.cloneElement(icon, { size: 22, flexShrink: 2 })}
+            {drawerOpen && label}
+          </button>
+        ))}
+      </div>
+
+      {/* Main Page Content */}
       <div
         style={{
           flex: 1,
-          width: '100%',
-          maxWidth: '1200px',
-          marginTop: '10px',
-          transition: 'all 0.3s ease',
+          padding: "20px",
+          overflowY: "auto",
+          transition: "all 0.3s ease",
         }}
       >
         {renderPage()}
