@@ -3,7 +3,6 @@ import { FaFacebook, FaTwitter, FaInstagram, FaGithub, FaUniversity } from 'reac
 
 function Home() {
   const [hoveredCard, setHoveredCard] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [totalTeachers, setTotalTeachers] = useState(0);
   const [totalStudents, setTotalStudents] = useState(0);
