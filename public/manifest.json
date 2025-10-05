@@ -1,6 +1,6 @@
 {
   "short_name": "Local Tutor Hub",
-  "name": "Create React App Sample",
+  "name": "Local Tutor Hub",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,18 +8,18 @@
       "type": "image/x-icon"
     },
     {
-      "src": "tutor.jpeg",
-      "type": "image/jpeg",
+      "src": "tutor192.png",
+      "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "tutor.jpeg",
-      "type": "image/jpeg",
+      "src": "tutor512.png",
+      "type": "image/png",
       "sizes": "512x512"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#1976d2",
   "background_color": "#ffffff"
 }
