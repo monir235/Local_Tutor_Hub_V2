@@ -20,8 +20,12 @@ const TutorLogin = ({ onPageChange }) => {
         const data = await response.json();
         setLoginStatus(data.message);
         if (data.success) {
-          onPageChange('Tutor');
-        }
+  if (data.tutorExists) {
+    onPageChange('Tinfo'); // go directly to Tinfo page
+  } else {
+    onPageChange('Tutor'); // go to form page
+  }
+}
       } else {
         throw new Error('Login failed');
       }
