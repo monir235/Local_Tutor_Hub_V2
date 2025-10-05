@@ -73,6 +73,7 @@ const SearchStu = () => {
           color: #fff;
           box-sizing: border-box;
         }
+
         h1 {
           font-size: 2.5rem;
           margin-bottom: 40px;
@@ -80,6 +81,7 @@ const SearchStu = () => {
           text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
           text-align: center;
         }
+
         .search {
           display: flex;
           flex-wrap: wrap;
@@ -89,31 +91,43 @@ const SearchStu = () => {
           width: 100%;
           max-width: 600px;
         }
+
         .search input {
           padding: 12px 15px;
-          border-radius: 10px;
-          border: none;
+          border-radius: 15px;
+          border: 1px solid rgba(255,255,255,0.3);
           outline: none;
           width: 100%;
           max-width: 400px;
           font-size: 1rem;
-          box-sizing: border-box;
+          background: rgba(255,255,255,0.1);
+          color: #fff;
+          backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
         }
+
+        .search input:focus {
+          border: 1px solid #fff;
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
         .search button {
           padding: 12px 20px;
-          border-radius: 10px;
+          border-radius: 15px;
           border: none;
-          background: #ff7e5f;
+          background: linear-gradient(135deg, #ff758c, #ff7eb3);
           color: white;
           font-weight: 600;
           cursor: pointer;
-          transition: transform 0.3s, background 0.3s;
+          transition: transform 0.3s, box-shadow 0.3s;
           flex-shrink: 0;
         }
+
         .search button:hover {
-          background: #feb47b;
           transform: scale(1.05);
+          box-shadow: 0 8px 20px rgba(255, 125, 179, 0.5);
         }
+
         .cardContainer {
           display: flex;
           flex-wrap: wrap;
@@ -121,36 +135,49 @@ const SearchStu = () => {
           gap: 25px;
           width: 100%;
         }
+
         .card {
           width: 100%;
           max-width: 300px;
-          border-radius: 20px;
+          border-radius: 25px;
           padding: 25px;
-          background: #ffffff;
-          color: #333;
+          background: rgba(255, 255, 255, 0.1);
+          color: #fff;
           text-align: center;
           font-weight: 500;
           box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255,255,255,0.2);
           transition: transform 0.3s, box-shadow 0.3s;
         }
+
         .card:hover {
           transform: translateY(-10px);
-          box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+          box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
+
         .card h2 {
           font-size: 1.5rem;
           margin-bottom: 15px;
           font-weight: 700;
-          color: #007bff;
+          color: #ffd700;
+          text-shadow: 1px 1px 8px rgba(0,0,0,0.3);
         }
+
         .card p {
           margin: 8px 0;
           font-size: 1rem;
+          color: #f0f0f0;
         }
+
         @media (max-width: 900px) {
           .cardContainer {
             flex-direction: column;
             align-items: center;
+          }
+
+          .search {
+            flex-direction: column;
           }
         }
       `}</style>
