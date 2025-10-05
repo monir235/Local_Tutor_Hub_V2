@@ -159,16 +159,16 @@ const styles = {
     color: '#eee',
   },
   input: {
-    width: '100%',
-    padding: '14px',
-    borderRadius: '10px',
-    border: 'none',
-    outline: 'none',
-    fontSize: '15px',
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    color: '#fff',
-    transition: 'all 0.3s ease',
-  },
+  width: "100%",
+  padding: "14px 18px",   // ✅ 14px top/bottom, 18px left/right
+  borderRadius: "10px",
+  border: "none",
+  outline: "none",
+  fontSize: "15px",
+  backgroundColor: "rgba(255,255,255,0.2)",
+  color: "#fff",
+  boxSizing: "border-box", // ✅ ensures padding doesn’t overflow
+},
   button: {
     width: '100%',
     padding: '14px',

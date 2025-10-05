@@ -1,65 +1,71 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const StuLogin = ({ onPageChange }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loginStatus, setLoginStatus] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginStatus, setLoginStatus] = useState("");
   const [isForgotPassword, setIsForgotPassword] = useState(false);
-  const [forgotEmail, setForgotEmail] = useState('');
-  const [forgotStatus, setForgotStatus] = useState('');
+  const [forgotEmail, setForgotEmail] = useState("");
+  const [forgotStatus, setForgotStatus] = useState("");
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('https://sirajum.alwaysdata.net/localtutorhub/studentprofile.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      });
+      const response = await fetch(
+        "https://sirajum.alwaysdata.net/localtutorhub/studentprofile.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
         setLoginStatus(data.message);
 
         if (data.success) {
-          if (data.studentExists) {    // ✅ corrected
-            onPageChange('Stubd');     // ✅ student dashboard page
+          if (data.studentExists) {
+            onPageChange("Stubd"); // student dashboard page
           } else {
-            onPageChange('StuInfo');   // ✅ student info form
+            onPageChange("StuInfo"); // student info form
           }
         }
       } else {
-        throw new Error('Login failed');
+        throw new Error("Login failed");
       }
     } catch (error) {
-      console.error('Error:', error);
-      setLoginStatus('Login failed');
+      console.error("Error:", error);
+      setLoginStatus("Login failed");
     }
   };
 
   const handleForgotPassword = async () => {
     try {
-      const response = await fetch('http://localhost/localtutorhub/studentforgot.php', {   // ✅ point to real backend
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: forgotEmail })
-      });
+      const response = await fetch(
+        "http://localhost/localtutorhub/studentforgot.php",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: forgotEmail }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
         setForgotStatus(data.message);
       } else {
-        throw new Error('Recovery failed');
+        throw new Error("Recovery failed");
       }
     } catch (error) {
-      console.error('Error:', error);
-      setForgotStatus('Failed to send recovery email');
+      console.error("Error:", error);
+      setForgotStatus("Failed to send recovery email");
     }
   };
 
   return (
-    <div style={styles.background}>
+    <div style={styles.pageBackground}>
       <div style={styles.card}>
-        <h1 style={styles.header}>Student Login</h1>  {/* ✅ fixed header */}
+        <h1 style={styles.header}>Student Login</h1>
         {isForgotPassword ? (
           <div>
             <h3 style={styles.subHeader}>Forgot Password</h3>
@@ -119,53 +125,93 @@ const StuLogin = ({ onPageChange }) => {
 };
 
 const styles = {
-  background: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    background: 'linear-gradient(135deg, #667eea, #764ba2)',
-    fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
+  pageBackground: {
+    minHeight: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background: "linear-gradient(135deg, #667eea, #764ba2)",
+    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    padding: "20px",
   },
   card: {
-    width: '400px',
-    padding: '40px',
-    borderRadius: '20px',
-    background: 'rgba(255, 255, 255, 0.15)',
-    backdropFilter: 'blur(15px)',
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
-    textAlign: 'center',
-    color: '#fff',
+    width: "100%",
+    maxWidth: "420px",
+    padding: "30px",
+    borderRadius: "18px",
+    background: "rgba(255, 255, 255, 0.12)",
+    backdropFilter: "blur(20px)",
+    boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+    textAlign: "center",
+    color: "#fff",
   },
   header: {
-    marginBottom: '30px',
-    fontSize: '2rem',
-    fontWeight: '700',
-    color: '#fff',
+    marginBottom: "25px",
+    fontSize: "clamp(1.5rem, 4vw, 2rem)", // responsive font size
+    fontWeight: "bold",
+  },
+  subHeader: {
+    marginBottom: "20px",
+    fontSize: "1.2rem",
+    fontWeight: "500",
+  },
+  inputGroup: {
+    textAlign: "left",
+    marginBottom: "18px",
+  },
+  label: {
+    fontSize: "14px",
+    fontWeight: "600",
+    marginBottom: "6px",
+    display: "block",
+    color: "#eee",
   },
   input: {
-    width: '100%',
-    padding: '14px',
-    marginBottom: '20px',
-    borderRadius: '12px',
-    border: '1px solid rgba(255,255,255,0.3)',
-    background: 'rgba(255, 255, 255, 0.2)',
-    color: '#fff',
-    fontSize: '1rem',
-    outline: 'none',
-    transition: 'all 0.3s',
-  },
+  width: "100%",
+  padding: "14px 18px",   // ✅ 14px top/bottom, 18px left/right
+  borderRadius: "10px",
+  border: "none",
+  outline: "none",
+  fontSize: "15px",
+  backgroundColor: "rgba(255,255,255,0.2)",
+  color: "#fff",
+  boxSizing: "border-box", // ✅ ensures padding doesn’t overflow
+},
   button: {
-    width: '100%',
-    padding: '14px',
-    borderRadius: '12px',
-    border: 'none',
-    background: 'linear-gradient(135deg, #ff758c, #ff7eb3)',
-    color: '#fff',
-    fontWeight: '700',
-    fontSize: '1rem',
-    cursor: 'pointer',
-    transition: 'all 0.3s',
+    width: "100%",
+    padding: "14px",
+    background: "linear-gradient(90deg, #ff512f, #dd2476)",
+    color: "#fff",
+    border: "none",
+    borderRadius: "10px",
+    fontSize: "16px",
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    marginTop: "12px",
+  },
+  secondaryButton: {
+    width: "100%",
+    padding: "14px",
+    background: "#444",
+    color: "#fff",
+    border: "none",
+    borderRadius: "10px",
+    fontSize: "16px",
+    cursor: "pointer",
+    marginTop: "12px",
+  },
+  statusText: {
+    marginTop: "15px",
+    fontSize: "14px",
+    color: "#ffb3b3",
+  },
+  forgotPasswordLink: {
+    marginTop: "18px",
+    fontSize: "14px",
+    color: "#fff",
+    cursor: "pointer",
+    textDecoration: "underline",
+    opacity: 0.9,
   },
 };
 
