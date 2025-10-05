@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
+
+
+
+
 
 const StudentForm = ({ onPageChange }) => {
   const [formData, setFormData] = useState({
@@ -9,6 +13,27 @@ const StudentForm = ({ onPageChange }) => {
     salary: ''
   });
 
+
+
+
+   useEffect(() => {
+      const fetchLatestProfile = async () => {
+        try {
+          const res = await fetch("https://sirajum.alwaysdata.net/localtutorhub/getlatestprofile.php");
+          const data = await res.json();
+          setFormData(prev => ({
+            ...prev,
+            name: data.name || '',
+            email: data.email || ''
+          }));
+        } catch (err) {
+          console.error("Error fetching latest profile:", err);
+        }
+      };
+  
+      fetchLatestProfile();
+    }, []);
+    
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
