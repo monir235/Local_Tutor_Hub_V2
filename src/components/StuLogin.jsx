@@ -3,39 +3,116 @@ import React, { useState } from 'react';
 const StuLogin = ({ onPageChange }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginStatus, setLoginStatus] = useState('');
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotStatus, setForgotStatus] = useState('');
 
-  const handleLogin = () => {
-    // You can still send login info to backend if you want, but navigation happens regardless
-    fetch('https://sirajum.alwaysdata.net/localtutorhub/studentprofile.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
-    .catch((error) => console.error(error));
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('https://sirajum.alwaysdata.net/localtutorhub/studentprofile.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
 
-    // Navigate regardless of login result
-    onPageChange('StuInfo');
+      if (response.ok) {
+        const data = await response.json();
+        setLoginStatus(data.message);
+
+        if (data.success) {
+          if (data.studentExists) {    // ✅ corrected
+            onPageChange('Stubd');     // ✅ student dashboard page
+          } else {
+            onPageChange('StuInfo');   // ✅ student info form
+          }
+        }
+      } else {
+        throw new Error('Login failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setLoginStatus('Login failed');
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    try {
+      const response = await fetch('http://localhost/localtutorhub/studentforgot.php', {   // ✅ point to real backend
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: forgotEmail })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setForgotStatus(data.message);
+      } else {
+        throw new Error('Recovery failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setForgotStatus('Failed to send recovery email');
+    }
   };
 
   return (
     <div style={styles.background}>
       <div style={styles.card}>
-        <h1 style={styles.header}>Student Login</h1>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          style={styles.input}
-          placeholder="Email"
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={styles.input}
-          placeholder="Password"
-        />
-        <button onClick={handleLogin} style={styles.button}>Login</button>
+        <h1 style={styles.header}>Student Login</h1>  {/* ✅ fixed header */}
+        {isForgotPassword ? (
+          <div>
+            <h3 style={styles.subHeader}>Forgot Password</h3>
+            <input
+              type="email"
+              value={forgotEmail}
+              onChange={(e) => setForgotEmail(e.target.value)}
+              placeholder="Enter your email"
+              style={styles.input}
+            />
+            <button onClick={handleForgotPassword} style={styles.button}>
+              Send Recovery Email
+            </button>
+            {forgotStatus && <p style={styles.statusText}>{forgotStatus}</p>}
+            <button
+              onClick={() => setIsForgotPassword(false)}
+              style={styles.secondaryButton}
+            >
+              Back to Login
+            </button>
+          </div>
+        ) : (
+          <div>
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                style={styles.input}
+              />
+            </div>
+            <div style={styles.inputGroup}>
+              <label style={styles.label}>Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                style={styles.input}
+              />
+            </div>
+            <button onClick={handleLogin} style={styles.button}>
+              Login
+            </button>
+            {loginStatus && <p style={styles.statusText}>{loginStatus}</p>}
+            <p
+              onClick={() => setIsForgotPassword(true)}
+              style={styles.forgotPasswordLink}
+            >
+              Forgot Password?
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -91,18 +168,5 @@ const styles = {
     transition: 'all 0.3s',
   },
 };
-
-// Optional: Add hover and focus effects
-const styleSheet = document.styleSheets[0];
-styleSheet.insertRule(`
-input:focus {
-  border: 1px solid #fff;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}`, styleSheet.cssRules.length);
-styleSheet.insertRule(`
-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 6px 20px rgba(255, 125, 179, 0.6);
-}`, styleSheet.cssRules.length);
 
 export default StuLogin;
