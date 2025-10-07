@@ -10,6 +10,8 @@ import {
   FaMoneyBill,
   FaUserPlus,
 } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";      // ≡
+import { FaTimes } from "react-icons/fa";     // ×
 
 import TeacherLogin from "./components/TeacherLogin";
 import Home from "./components/Home";
@@ -36,6 +38,7 @@ import MoneyCard from "./components/MoneyCard";
 function App() {
   const [currentPage, setCurrentPage] = useState("Admin");
   const [drawerOpen, setDrawerOpen] = useState(false);
+ 
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -115,25 +118,20 @@ function App() {
     >
       {/* Toggle Button */}
       <button
-        onClick={() => setDrawerOpen(!drawerOpen)}
-        style={{
-          position: "fixed",
-          top: "15px",
-          right: "20px",
-          zIndex: 1100,
-          background: "linear-gradient(135deg, #4f46e5, #3b82f6)",
-          border: "none",
-          color: "#fff",
-          padding: "10px 15px",
-          borderRadius: "8px",
-          cursor: "pointer",
-          fontSize: "20px",
-          fontWeight: "bold",
-        }}
-      >
-        {"≡"}
-      </button>
-
+  onClick={() => setDrawerOpen(!drawerOpen)}
+  style={{
+    position: "fixed",
+    top: "15px",
+    right: "20px",
+    zIndex: 1100,
+    background: "transparent", // 👈 transparent background
+    border: "none",
+    color: "#0aabebff",             // 👈 icon color
+    cursor: "pointer",
+  }}
+>
+  {drawerOpen ? <FaTimes size={40} /> : <FaBars size={40} />}
+</button>
       {/* Full Top Drawer */}
       <div
         style={{
