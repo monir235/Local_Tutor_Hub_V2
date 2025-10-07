@@ -60,6 +60,19 @@ const SearchTutor = () => {
       </div>
 
       <style jsx>{`
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100%;
+  overflow-x: hidden;
+}
+
         .container {
           display: flex;
           flex-direction: column;
@@ -119,6 +132,7 @@ const SearchTutor = () => {
           cursor: pointer;
           transition: transform 0.3s, box-shadow 0.3s;
           flex-shrink: 0;
+          max-width: 100%;
         }
 
         .search button:hover {
