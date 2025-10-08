@@ -103,12 +103,12 @@ const SearchStu = () => {
         }
 
         .search input {
-          padding: 12px 15px;
-          border-radius: 15px;
+          padding: 8px 10px;
+          border-radius: 10px;
           border: 1px solid rgba(255,255,255,0.3);
           outline: none;
           width: 100%;
-          max-width: 400px;
+          max-width: 250px;
           font-size: 1rem;
           background: rgba(255,255,255,0.1);
           color: #fff;
@@ -131,6 +131,7 @@ const SearchStu = () => {
           cursor: pointer;
           transition: transform 0.3s, box-shadow 0.3s;
           flex-shrink: 0;
+          max-width: 150px;
         }
 
         .search button:hover {
