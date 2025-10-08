@@ -150,8 +150,8 @@ html, body {
 
         .card {
           width: 100%;
-          max-width: 300px;
-          border-radius: 25px;
+          max-width: 230px;
+          border-radius: 20px;
           padding: 25px;
           background: rgba(255, 255, 255, 0.1);
           color: #fff;
