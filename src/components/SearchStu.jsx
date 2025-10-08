@@ -62,6 +62,16 @@ const SearchStu = () => {
       </div>
 
       <style jsx>{`
+      html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100%;
+  overflow-x: hidden;
+}
         .container {
           display: flex;
           flex-direction: column;
@@ -138,8 +148,8 @@ const SearchStu = () => {
 
         .card {
           width: 100%;
-          max-width: 300px;
-          border-radius: 25px;
+          max-width: 230px;
+          border-radius: 20px;
           padding: 25px;
           background: rgba(255, 255, 255, 0.1);
           color: #fff;
